@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "uuid": "^3.3.3",
     "websocket": "^1.0.30"
   }
 }

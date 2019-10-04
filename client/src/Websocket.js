@@ -11,10 +11,18 @@ class Websocket extends React.Component{
           console.log(message);
         };
       }
+
+
+      handleBtnClick = (e) => {
+          client.send(JSON.stringify({test:'Hello'}))
+          console.log('hello',e.target)
+      }
+
     render(){
         return(
             <div>
             <h2>Test</h2>
+            <button onClick={(e)=> this.handleBtnClick(e)}>Send Event</button>
             </div>
         )
     }
