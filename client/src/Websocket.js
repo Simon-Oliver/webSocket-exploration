@@ -1,6 +1,6 @@
 import React from 'react'
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-const client = new W3CWebSocket('wss://192.168.1.102:8000');
+const client = new W3CWebSocket('ws://192.168.1.11:8000');
 
 class Websocket extends React.Component{
     componentDidMount() {
