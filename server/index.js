@@ -16,7 +16,7 @@ var server = http.createServer(function(request, response) {
   // not HTTP server
 });
 server.listen(webSocketsServerPort, function() {
-  console.log(new Date() + ' Server is listening on port ' + webSocketsServerPort);
+  console.log(' Server is listening on port ' + webSocketsServerPort);
 });
 
 //WebSocket server
@@ -37,19 +37,19 @@ wsServer.on('request', function(request) {
   // we need to know client index to remove them on 'close' event
 
   console.log(new Date() + ' Connection accepted.');
-  connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
+  //connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
 
   // user sent some message
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
-      console.log(message);
+      const data = JSON.parse(message.utf8Data).data;
 
-      connection.sendUTF(JSON.stringify({ type: 'name', data: message }));
+      connection.sendUTF(JSON.stringify({ type: 'name', data: data }));
     }
   });
 
   // user disconnected
   connection.on('close', function(connection) {
-    console.log(new Date() + ' Peer ' + connection.remoteAddress + ' disconnected.'); // remove user from the list of connected clients
+    console.log(connection.remoteAddress + ' disconnected.'); // remove user from the list of connected clients
   });
 });
