@@ -35,7 +35,7 @@ wsServer.on('request', function(request) {
   // (http://en.wikipedia.org/wiki/Same_origin_policy)
   var connection = request.accept(null, request.origin);
   // we need to know client index to remove them on 'close' event
-
+  let index = clients.push(connection);
   console.log(new Date() + ' Connection accepted.');
   //connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
 
@@ -44,12 +44,16 @@ wsServer.on('request', function(request) {
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data).data;
 
-      connection.sendUTF(JSON.stringify({ type: 'name', data: data }));
+      clients.forEach(client => {
+        client.sendUTF(JSON.stringify({ type: 'name', data: data }));
+      });
+      //connection.sendUTF(JSON.stringify({ type: 'name', data: data }));
     }
   });
 
   // user disconnected
   connection.on('close', function(connection) {
+    clients.splice(index - 1, 1);
     console.log(connection.remoteAddress + ' disconnected.'); // remove user from the list of connected clients
   });
 });
