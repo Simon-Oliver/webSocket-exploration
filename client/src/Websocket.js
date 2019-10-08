@@ -15,8 +15,8 @@ class Websocket extends React.Component{
 
       handleBtnClick = (e) => {
           e.preventDefault()
-          client.send(JSON.stringify({test:'Hello'}))
-          console.log('hello',e)
+          const data = e.target[0].value
+          client.send(JSON.stringify({test:data}))
       }
 
     render(){
