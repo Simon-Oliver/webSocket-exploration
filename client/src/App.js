@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import Websocket from './Websocket'
+import AddOrder from './AddOrder';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Websocket></Websocket>
+        <AddOrder></AddOrder>
       </header>
     </div>
   );
