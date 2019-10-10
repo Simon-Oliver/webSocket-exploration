@@ -19,9 +19,15 @@ class AddOrder extends React.Component {
         <div className="row">
           <form className="col s12" onChange={e => this.handleOnChange(e)}>
             <div className="row">
-              <div className="input-field col s12">
-                <input id="orderTitle" type="text" className="validate" />
-                <label htmlFor="orderTitle">Order Title</label>
+              <div className="input-field col s6">
+                <input id="orderItem" type="text" className="validate" />
+                <label htmlFor="orderItem">Order Title</label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="input-field col s6">
+                <input id="orderCount" type="number" className="validate" />
+                <label htmlFor="orderCount">Amount</label>
               </div>
             </div>
           </form>
