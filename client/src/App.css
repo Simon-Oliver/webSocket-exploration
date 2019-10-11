@@ -13,7 +13,23 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
+}
+
+.display-order {
+  display: flex;
+}
+
+.display-order-item {
+  margin-right: auto;
+}
+
+
+.display-order-count>span:nth-child(1) {
+  float: left;
+  text-align: left;
+  width: 5rem;
+
 }
 
 .App-link {
