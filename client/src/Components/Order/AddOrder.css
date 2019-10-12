@@ -1,0 +1,4 @@
+/* Prevents span and div being clickable and showing in event.target*/
+li>* {
+    pointer-events: none;
+}

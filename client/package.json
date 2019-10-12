@@ -6,7 +6,9 @@
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-hooks": "^1.0.1",
     "react-scripts": "3.2.0",
+    "uuid": "^3.3.3",
     "websocket": "^1.0.30"
   },
   "scripts": {
@@ -32,8 +34,8 @@
   },
   "proxy": "https://192.168.1.11:8000",
   "devDependencies": {
-    "eslint": "^6.1.0",
     "babel-eslint": "^10.0.3",
+    "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-config-react-app": "^5.0.2",
