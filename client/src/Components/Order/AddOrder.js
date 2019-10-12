@@ -9,7 +9,7 @@ class AddOrder extends React.Component {
   state = {
     orders: [],
     newOrder: { orderItem: '', orderCount: '', id: '' },
-    modalIsOpen: true,
+    modalIsOpen: false,
     selectedItem: {}
   };
 
@@ -36,8 +36,9 @@ class AddOrder extends React.Component {
     const itemId = selected.target.dataset.key;
     const selectedItem = this.state.orders.filter(e => e.id === itemId)[0];
     console.log(selectedItem);
-    this.setState({ selectedItem });
-    //this.handleShow(itemId);
+    this.setState({ selectedItem }, () => {
+      this.toggleModal();
+    });
   };
 
   renderList = () => {
@@ -46,7 +47,9 @@ class AddOrder extends React.Component {
         className="collection-item display-order"
         key={item.id}
         data-key={item.id}
-        onClick={e => this.handleSelect(e)}
+        onClick={e => {
+          this.handleSelect(e);
+        }}
       >
         <div className="display-order-count">
           <span>{item.orderCount}x</span>
@@ -57,19 +60,29 @@ class AddOrder extends React.Component {
     return item;
   };
 
-  handleHide = () => {
-    this.setState({ modalIsOpen: false });
+  toggleModal = e => {
+    this.setState(prevState => ({
+      modalIsOpen: !prevState.modalIsOpen
+    }));
   };
 
-  // handleShow = data => {
-  //   console.log(selectedItem[0]);
-  //   //this.setState({ modalIsOpen: true });
-  // };
+  updateOrder = (id, data) => {
+    //const oldData = this.state.orders.filter(e => e.id !== id);
+    console.log(data);
+  };
 
   render() {
     return (
       <div>
-        <EditOrderModal></EditOrderModal>
+        {this.state.modalIsOpen ? (
+          <EditOrderModal
+            selectedItem={this.state.selectedItem}
+            updateOrder={this.updateOrder}
+            isOpen={this.state.modalIsOpen}
+            toggleModal={this.toggleModal}
+          ></EditOrderModal>
+        ) : null}
+
         <ul className="collection">
           {this.state.orders.length > 0 ? (
             this.renderList()
