@@ -16,21 +16,6 @@
   color: black;
 }
 
-.display-order {
-  display: flex;
-}
-
-.display-order-item {
-  margin-right: auto;
-}
-
-
-.display-order-count>span:nth-child(1) {
-  float: left;
-  text-align: left;
-  width: 5rem;
-
-}
 
 .App-link {
   color: #09d3ac;

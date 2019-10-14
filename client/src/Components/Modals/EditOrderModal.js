@@ -13,6 +13,12 @@ export default class EditOrderModal extends Component {
     this.setState({ ...this.props.selectedItem });
   }
 
+  handleChange = e => {
+    const key = e.target.id;
+    const data = e.target.value;
+    this.setState(prevState => ({ ...prevState.newOrder, [key]: data }));
+  };
+
   render() {
     const { isOpen, children, updateOrder, toggleModal } = this.props;
     return (
@@ -23,16 +29,19 @@ export default class EditOrderModal extends Component {
           // updateOrder(null, '____Test Modal____');
           if (e.target.id == 'modalBg') {
             toggleModal();
+            updateOrder(this.state.id, { ...this.state });
           }
         }}
       >
         <div className="edit-order-modal-container">
           <form
             className="col s12"
-            onChange={e => updateOrder(e)}
+            onChange={e => {
+              this.handleChange(e);
+            }}
             //onSubmit={e => this.handleOnSubmit(e)}
           >
-            <div className="row">
+            <div className="row modal-row">
               <div className="input-field col s3">
                 <input
                   id="orderCount"
@@ -40,7 +49,9 @@ export default class EditOrderModal extends Component {
                   className="validate"
                   value={this.state.orderCount}
                 />
-                <label htmlFor="orderCount">Amount</label>
+                <label className="active" htmlFor="orderCount">
+                  Amount
+                </label>
               </div>
               <div className="input-field col s9">
                 <input
@@ -49,9 +60,10 @@ export default class EditOrderModal extends Component {
                   className="validate"
                   value={this.state.orderItem}
                 />
-                <label htmlFor="orderItem">Order Title</label>
+                <label className="active" htmlFor="orderItem">
+                  Order Title
+                </label>
               </div>
-              <button className="btn">Add Order</button>
             </div>
           </form>
         </div>

@@ -51,10 +51,12 @@ class AddOrder extends React.Component {
           this.handleSelect(e);
         }}
       >
-        <div className="display-order-count">
-          <span>{item.orderCount}x</span>
+        <div className="row">
+          <div className="col s3 display-order-count ">
+            <span>{item.orderCount}x</span>
+          </div>
+          <div className="col s8 display-order-item">{item.orderItem}</div>
         </div>
-        <div className="display-order-item">{item.orderItem}</div>
       </li>
     ));
     return item;
@@ -67,8 +69,9 @@ class AddOrder extends React.Component {
   };
 
   updateOrder = (id, data) => {
-    //const oldData = this.state.orders.filter(e => e.id !== id);
     console.log(data);
+    const oldData = this.state.orders.filter(e => e.id !== id);
+    this.setState({ orders: [...oldData, data] });
   };
 
   render() {

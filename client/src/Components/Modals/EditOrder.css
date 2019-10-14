@@ -19,3 +19,7 @@
 .modal-close {
     display: none;
 }
+
+.row.modal-row {
+    margin: 0
+}
