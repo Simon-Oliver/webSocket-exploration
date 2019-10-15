@@ -30,33 +30,28 @@
     color: white;
 }
 
-.order-items-1 {
-    justify-self: flex-end;
-    grid-column-start: 1;
-    grid-column-end: 2;
+th {
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+    pointer-events: none;
 }
 
-.order-items-2 {
-    justify-self: center;
-    grid-column-start: 2;
-    grid-column-end: 3;
-}
 
-.order-items-3 {
-    justify-self: flex-end;
-    grid-column-start: 3;
-    grid-column-end: 4;
-}
+
 
 .header {
     justify-self: center;
     font-weight: 500;
+    border-width: 5px;
+    border-color: white;
 }
 
 .number {
-    justify-self: flex-end;
+    width: auto;
+    text-align: end;
 }
 
-.line {
-    border-bottom: grey;
+.item {
+    border-color: white;
 }

@@ -41,12 +41,16 @@ export default class ItemSelection extends Component {
     }
   };
 
+  handleOrderClick = e => {
+    console.log(e.currentTarget);
+  };
+
   render() {
     return (
       <div className="select-order-container-grid">
         <div className="select-order-left">
           <div className="order-container">
-            <Items order={this.state.order}></Items>
+            <Items handleOrderClick={this.handleOrderClick} order={this.state.order}></Items>
           </div>
         </div>
         <div className="select-order-right">
