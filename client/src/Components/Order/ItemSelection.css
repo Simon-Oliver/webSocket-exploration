@@ -37,8 +37,9 @@ th {
     pointer-events: none;
 }
 
-
-
+tr {
+    cursor: pointer;
+}
 
 .header {
     justify-self: center;
