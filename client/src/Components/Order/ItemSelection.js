@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ItemSelection.css';
 import Items from './Items';
 import OrderItems from './OrderItems';
+import EditOrderModal from '../Modals/EditOrderModal';
 
 export default class ItemSelection extends Component {
   state = {
@@ -21,7 +22,9 @@ export default class ItemSelection extends Component {
     ],
     order: [
       { qnt: 4, id: 12, item: 'Salad', price: '8', options: ['Rare', 'Medium Rare', 'Well Done'] }
-    ]
+    ],
+    selected: {},
+    modalIsOpen: false
   };
 
   handleItemClick = e => {
@@ -41,12 +44,42 @@ export default class ItemSelection extends Component {
     }
   };
 
+  handelSelect = id => {
+    const selected = this.state.order.find(e => e.id === Number(id));
+    this.setState({ selected });
+    this.toggleModal();
+    console.log(selected);
+  };
+
+  toggleModal = e => {
+    this.setState(prevState => ({
+      modalIsOpen: !prevState.modalIsOpen
+    }));
+  };
+
+  updateOrder = (id, update) => {
+    const order = this.state.order;
+    const indexOfUpdate = this.state.order.findIndex(item => item.id === Number(id));
+
+    order[indexOfUpdate].qnt = update;
+    this.setState({ order: [...order] });
+    console.log(id, update);
+  };
+
   render() {
     return (
       <div className="select-order-container-grid">
+        {this.state.modalIsOpen ? (
+          <EditOrderModal
+            selectedItem={this.state.selected}
+            updateOrder={this.updateOrder}
+            isOpen={this.state.modalIsOpen}
+            toggleModal={this.toggleModal}
+          ></EditOrderModal>
+        ) : null}
         <div className="select-order-left">
           <div className="order-container">
-            <Items order={this.state.order}></Items>
+            <Items handleSelect={this.handelSelect} order={this.state.order}></Items>
           </div>
         </div>
         <div className="select-order-right">

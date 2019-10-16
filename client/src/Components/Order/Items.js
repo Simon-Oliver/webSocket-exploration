@@ -10,7 +10,7 @@ export default function Items(props) {
         <th className="number">PRICE</th>
       </tr>
       {props.order.map((e, i) => (
-        <Item key={i} item={e}></Item>
+        <Item handleSelect={props.handleSelect} key={i} item={e}></Item>
       ))}
     </table>
   );
