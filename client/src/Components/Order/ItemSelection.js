@@ -61,9 +61,14 @@ export default class ItemSelection extends Component {
     const order = this.state.order;
     const indexOfUpdate = this.state.order.findIndex(item => item.id === Number(id));
 
-    order[indexOfUpdate].qnt = update;
+    order[indexOfUpdate].qnt = Number(update);
     this.setState({ order: [...order] });
     console.log(id, update);
+  };
+
+  deletedOrder = id => {
+    const order = this.state.order.filter(e => e.id !== id);
+    this.setState({ order: [...order] });
   };
 
   render() {
@@ -75,6 +80,7 @@ export default class ItemSelection extends Component {
             updateOrder={this.updateOrder}
             isOpen={this.state.modalIsOpen}
             toggleModal={this.toggleModal}
+            deletedOrder={this.deletedOrder}
           ></EditOrderModal>
         ) : null}
         <div className="select-order-left">

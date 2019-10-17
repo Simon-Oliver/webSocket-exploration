@@ -1,15 +1,11 @@
 import React from 'react';
 import './App.css';
-import AddOrder from './Order/AddOrder';
-import ItemSelection from './Order/ItemSelection';
+import Test from './Test';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <ItemSelection></ItemSelection>
-        <AddOrder></AddOrder>
-      </header>
+      <Test></Test>
     </div>
   );
 }

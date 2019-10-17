@@ -61,6 +61,17 @@ export default class EditOrderModal extends Component {
                 </label>
               </div>
             </div>
+            <button
+              class="btn waves-effect red darken-3 waves-light"
+              name="action"
+              onClick={e => {
+                e.preventDefault();
+                toggleModal();
+                this.props.deletedOrder(this.state.id);
+              }}
+            >
+              Delete
+            </button>
           </form>
         </div>
       </div>

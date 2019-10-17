@@ -1,0 +1,22 @@
+.modal-background {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background: #2a2a2e8e;
+}
+
+.modal-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 5px;
+}
+
+.modal-close {
+    display: none;
+}
