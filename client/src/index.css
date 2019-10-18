@@ -21,3 +21,11 @@ html {
 *:after {
   box-sizing: inherit;
 }
+
+.input {
+  display: flex;
+}
+
+.input>p {
+  pointer-events: none;
+}
