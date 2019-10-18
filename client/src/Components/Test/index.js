@@ -6,13 +6,19 @@ import { toggleState, updateObjById } from '../../helper';
 
 export default class Test extends Component {
   state = {
-    showModal: true
+    showModal: true,
+    item: [
+      { id: 1, name: 'Replace Me', job: 'Nothing' },
+      { id: 2, name: 'Dont touch me', job: 'VIP' },
+      { id: 3, name: 'Mr. Important', job: 'CEO' }
+    ]
   };
 
-  updateOrder = updateObjById('order');
+  //Pass id of item and new data as object
+  updateOrder = updateObjById('item');
 
   componentDidMount() {
-    this.setState(this.updateOrder(12, 'test'));
+    this.setState(this.updateOrder(1, { id: 1, name: 'test' }));
   }
 
   toggle = () => {

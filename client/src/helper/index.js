@@ -9,9 +9,9 @@ export const toggleState = key => {
 export const updateObjById = key => {
   return (id, update) => {
     return state => {
-      console.log(
-        `Object is ${key}. Item ID is ${id}. Data to update is ${update}. State is ${state}`
-      );
+      const updatedState = state[key].map(e => (e.id === id ? (e = { ...e, ...update }) : e));
+      state[key] = updatedState;
+      return { ...state };
     };
   };
 };
