@@ -43,7 +43,7 @@ wsServer.on('request', function(request) {
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data).data;
-
+      console.log(message);
       clients.forEach(client => {
         client.sendUTF(JSON.stringify({ type: 'name', data: data }));
       });

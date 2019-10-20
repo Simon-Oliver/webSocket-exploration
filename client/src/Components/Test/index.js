@@ -4,7 +4,9 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 export default class Test extends Component {
-  componentWillMount() {
+  state = {};
+
+  componentDidMount() {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
     };
@@ -13,16 +15,24 @@ export default class Test extends Component {
     };
   }
 
+  sendMessage = () => {
+    // const data = JSON.stringify({ lat, long });
+    // client.send(data);
+    console.log(this.state);
+  };
+
   render() {
     return (
-      <div class="row">
-        <div class="input-field col s6">
-          <input value="Alvin" id="first_name2" type="text" class="validate" />
-          <label class="active" for="first_name2">
+      <div className="row">
+        <div className="input-field col s6">
+          <input value="Alvin" id="first_name2" type="text" className="validate" />
+          <label className="active" htmlFor="first_name2">
             First Name
           </label>
         </div>
-        <button class="btn waves-effect waves-light">Click Me</button>
+        <button onClick={this.sendMessage} className="btn waves-effect waves-light">
+          Click Me
+        </button>
       </div>
     );
   }
