@@ -1,3 +1,23 @@
+const mongoose = require('mongoose');
+const Order = require('./models/Order');
+
+// DB connection
+const mongo_uri = process.env.MONGODB_URI || 'mongodb://localhost/kitchenTest';
+
+mongoose.connect(
+  mongo_uri,
+  {
+    useNewUrlParser: true
+  },
+  function(err) {
+    if (err) {
+      throw err;
+    } else {
+      console.log(`Successfully connected to ${mongo_uri}`);
+    }
+  }
+);
+
 const uuidv1 = require('uuid/v1');
 
 // Optional. You will see this name in eg. 'ps' or 'top' command
@@ -44,6 +64,17 @@ wsServer.on('request', function(request) {
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data).data;
       console.log(message);
+
+      const newOrder = { name: 'Test', orderFrom: 'test' };
+      const order = new Order(newOrder);
+      order.save(function(err) {
+        if (err) {
+          console.log('Error registering new order please try again.');
+        } else {
+          console.log('Order has been saved!');
+        }
+      });
+
       clients.forEach(client => {
         client.sendUTF(JSON.stringify({ type: 'name', data: data }));
       });

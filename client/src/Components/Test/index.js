@@ -16,8 +16,8 @@ export default class Test extends Component {
   }
 
   sendMessage = () => {
-    // const data = JSON.stringify({ lat, long });
-    // client.send(data);
+    const data = JSON.stringify({ message: 'TestClient1234' });
+    client.send(data);
     console.log(this.state);
   };
 
