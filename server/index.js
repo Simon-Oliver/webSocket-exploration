@@ -59,25 +59,34 @@ wsServer.on('request', function(request) {
   console.log(new Date() + ' Connection accepted.');
   //connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
 
+  Order.find({}, function(error, documents) {
+    connection.sendUTF(JSON.stringify({ data: documents }));
+  });
+
   // user sent some message
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data).data;
       console.log(message);
 
-      const newOrder = { name: 'Test', orderFrom: 'test' };
+      const { name } = data;
+
+      const newOrder = { name, orderFrom: 'test' };
       const order = new Order(newOrder);
       order.save(function(err) {
         if (err) {
           console.log('Error registering new order please try again.');
         } else {
           console.log('Order has been saved!');
+
+          clients.forEach(client => {
+            Order.find({}, function(error, documents) {
+              client.sendUTF(JSON.stringify({ data: documents }));
+            });
+          });
         }
       });
 
-      clients.forEach(client => {
-        client.sendUTF(JSON.stringify({ type: 'name', data: data }));
-      });
       //connection.sendUTF(JSON.stringify({ type: 'name', data: data }));
     }
   });

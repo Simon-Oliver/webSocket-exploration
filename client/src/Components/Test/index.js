@@ -4,28 +4,49 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 export default class Test extends Component {
-  state = {};
+  state = {
+    name: '',
+    arr: []
+  };
 
   componentDidMount() {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
     };
     client.onmessage = message => {
-      console.log(message);
+      const data = JSON.parse(message.data).data;
+      this.setState({ arr: data });
+      console.log(data);
     };
   }
 
   sendMessage = () => {
-    const data = JSON.stringify({ message: 'TestClient1234' });
+    const data = JSON.stringify({ data: { ...this.state } });
     client.send(data);
-    console.log(this.state);
+    this.setState({ name: '' });
+  };
+
+  onInputChange = e => {
+    const { id, value } = e.target;
+
+    this.setState(prevState => ({ ...prevState, [id]: value }));
+  };
+
+  renderList = () => {
+    return this.state.arr.map(e => <p>{e.name}</p>);
   };
 
   render() {
     return (
       <div className="row">
         <div className="input-field col s6">
-          <input value="Alvin" id="first_name2" type="text" className="validate" />
+          <input
+            onChange={e => this.onInputChange(e)}
+            value={this.state.name}
+            id="name"
+            type="text"
+            className="validate"
+          />
           <label className="active" htmlFor="first_name2">
             First Name
           </label>
@@ -33,6 +54,7 @@ export default class Test extends Component {
         <button onClick={this.sendMessage} className="btn waves-effect waves-light">
           Click Me
         </button>
+        {this.renderList()}
       </div>
     );
   }
