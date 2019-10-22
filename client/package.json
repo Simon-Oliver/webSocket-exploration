@@ -32,7 +32,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://192.168.1.11:8000",
+  "proxy": "http://localhost:8000",
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "eslint": "^6.1.0",

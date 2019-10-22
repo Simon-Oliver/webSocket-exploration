@@ -5,6 +5,7 @@ const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 export default class Test extends Component {
   state = {
+    id: '',
     name: '',
     arr: []
   };
@@ -18,6 +19,9 @@ export default class Test extends Component {
       this.setState({ arr: data });
       console.log(data);
     };
+    fetch('/home')
+      .then(res => res.text())
+      .then(data => console.log(data));
   }
 
   sendMessage = () => {
@@ -39,6 +43,18 @@ export default class Test extends Component {
   render() {
     return (
       <div className="row">
+        <div className="input-field col s2">
+          <input
+            onChange={e => this.onInputChange(e)}
+            value={this.state.id}
+            id="id"
+            type="text"
+            className="validate"
+          />
+          <label className="active" htmlFor="id">
+            ID
+          </label>
+        </div>
         <div className="input-field col s6">
           <input
             onChange={e => this.onInputChange(e)}
