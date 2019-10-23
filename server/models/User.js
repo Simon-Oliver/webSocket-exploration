@@ -6,4 +6,4 @@ const UserSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('User', UserSchema);

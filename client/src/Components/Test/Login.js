@@ -3,7 +3,7 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
-export default class Test extends Component {
+export default class Login extends Component {
   state = {
     userName: '',
     password: ''
@@ -22,9 +22,8 @@ export default class Test extends Component {
 
   sendMessage = e => {
     e.preventDefault();
-    const data = JSON.stringify({ data: { ...this.state } });
+    const data = JSON.stringify({ ...this.state });
     // client.send(data);
-
     fetch('/register', {
       method: 'POST',
       body: data,
@@ -47,7 +46,7 @@ export default class Test extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <div className="row">
           <form className="col s12">
             <div className="row">
