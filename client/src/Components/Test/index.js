@@ -5,9 +5,8 @@ const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 export default class Test extends Component {
   state = {
-    id: '',
-    name: '',
-    arr: []
+    userName: '',
+    password: ''
   };
 
   componentDidMount() {
@@ -19,15 +18,21 @@ export default class Test extends Component {
       this.setState({ arr: data });
       console.log(data);
     };
-    fetch('/home')
-      .then(res => res.text())
-      .then(data => console.log(data));
   }
 
-  sendMessage = () => {
+  sendMessage = e => {
+    e.preventDefault();
     const data = JSON.stringify({ data: { ...this.state } });
-    client.send(data);
-    this.setState({ name: '' });
+    // client.send(data);
+
+    fetch('/register', {
+      method: 'POST',
+      body: data,
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(this.setState({ userName: '', password: '' }));
   };
 
   onInputChange = e => {
@@ -42,35 +47,42 @@ export default class Test extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="input-field col s2">
-          <input
-            onChange={e => this.onInputChange(e)}
-            value={this.state.id}
-            id="id"
-            type="text"
-            className="validate"
-          />
-          <label className="active" htmlFor="id">
-            ID
-          </label>
+      <div class="container">
+        <div className="row">
+          <form className="col s12">
+            <div className="row">
+              <div className="input-field col s12">
+                <input
+                  onChange={e => this.onInputChange(e)}
+                  placeholder="Placeholder"
+                  id="userName"
+                  type="text"
+                  className="validate"
+                  value={this.state.userName}
+                />
+                <label htmlFor="userName">User Name</label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="input-field col s12">
+                <input
+                  onChange={e => this.onInputChange(e)}
+                  id="password"
+                  type="password"
+                  className="validate"
+                  value={this.state.password}
+                />
+                <label htmlFor="password">Password</label>
+              </div>
+              <button
+                onClick={e => this.sendMessage(e)}
+                className="waves-effect waves-light btn-large"
+              >
+                Send
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="input-field col s6">
-          <input
-            onChange={e => this.onInputChange(e)}
-            value={this.state.name}
-            id="name"
-            type="text"
-            className="validate"
-          />
-          <label className="active" htmlFor="first_name2">
-            First Name
-          </label>
-        </div>
-        <button onClick={this.sendMessage} className="btn waves-effect waves-light">
-          Click Me
-        </button>
-        {this.renderList()}
       </div>
     );
   }

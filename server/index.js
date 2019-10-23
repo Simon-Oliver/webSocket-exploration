@@ -14,4 +14,8 @@ app.get('/test', function(req, res) {
   res.send('Hello');
 });
 
+app.post('/register', (req, res) => {
+  console.log(req.body.data);
+});
+
 app.listen(PORT, () => console.log(`Express server currently running on port ${PORT}`));
