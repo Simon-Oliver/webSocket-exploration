@@ -39,7 +39,7 @@ app.get('/test', function(req, res) {
 app.post('/register', (req, res) => {
   User.findOne({ userName: req.body.userName }).then(user => {
     if (user) {
-      console.log('Users exists');
+      console.log('Users exists', user);
     } else {
       let user = new User({ userName: req.body.userName, password: req.body.password });
 
@@ -48,13 +48,25 @@ app.post('/register', (req, res) => {
           console.log(err);
         }
         user.password = hash;
+        user.save((err, doc) => {
+          if (err) {
+            console.log(err);
+          }
+          console.log('Saved', doc);
+        });
       });
-      user.save((err, doc) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log('Saved', doc);
-      });
+    }
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { userName, password } = req.body;
+
+  User.findOne({ userName }).then(user => {
+    if (user) {
+      console.log('Users exists', user.password);
+    } else {
+      console.log('nope');
     }
   });
 });

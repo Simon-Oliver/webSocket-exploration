@@ -34,6 +34,19 @@ export default class Login extends Component {
     }).then(this.setState({ userName: '', password: '' }));
   };
 
+  login = e => {
+    e.preventDefault();
+    const data = JSON.stringify({ ...this.state });
+    fetch('/login', {
+      method: 'POST',
+      body: data,
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(this.setState({ userName: '', password: '' }));
+  };
+
   onInputChange = e => {
     const { id, value } = e.target;
 
@@ -77,7 +90,10 @@ export default class Login extends Component {
                 onClick={e => this.sendMessage(e)}
                 className="waves-effect waves-light btn-large"
               >
-                Send
+                Create
+              </button>
+              <button onClick={e => this.login(e)} className="waves-effect waves-light btn-large">
+                Login
               </button>
             </div>
           </form>
