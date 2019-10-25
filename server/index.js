@@ -2,6 +2,10 @@ var home = require('./routes/home.js');
 var express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+var cookieParser = require('cookie-parser')
+
+const private_key="super-secret";
 
 var app = express();
 const PORT = 8000;
@@ -27,14 +31,8 @@ mongoose.connect(
 
 // ...
 app.use(express.json());
+app.use(cookieParser())
 app.use('/home', home);
-
-let count = 0;
-app.get('/test', function(req, res) {
-  count++;
-  console.log(count);
-  res.send('Hello');
-});
 
 app.post('/register', (req, res) => {
   User.findOne({ userName: req.body.userName }).then(user => {
@@ -59,14 +57,32 @@ app.post('/register', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
+const middle = (req,res,next) => {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
+  console.log(token);
+  next()
+}
+
+app.post('/login',middle,(req, res) => {
+  console.log(req.cookies);
   const { userName, password } = req.body;
 
   User.findOne({ userName }).then(user => {
     if (user) {
-      console.log('Users exists', user.password);
+      bcrypt.compare(password, user.password).then(isMatch => {
+        if(!isMatch){
+          res.
+          console.log("Login failed; Invalid user ID or password");
+        } else {
+          let tokenData = {}
+          tokenData.userName = user.userName
+          console.log(tokenData);
+          const token = jwt.sign(tokenData, private_key)
+          res.cookie("token", token, {maxAge: 900000, httpOnly: true}).sendStatus(200);
+        }
+      })
     } else {
-      console.log('nope');
+      console.log("Login failed; Invalid user ID or password");
     }
   });
 });
