@@ -59,12 +59,14 @@ app.post('/register', (req, res) => {
 
 const middle = (req,res,next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
-  console.log(token);
+  if(!token){
+    console.log('Nope!');
+  }
   next()
 }
 
 app.post('/login',middle,(req, res) => {
-  console.log(req.cookies);
+  console.log(req.user);
   const { userName, password } = req.body;
 
   User.findOne({ userName }).then(user => {
