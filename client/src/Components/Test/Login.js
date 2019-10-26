@@ -6,7 +6,8 @@ const client = new W3CWebSocket('ws://127.0.0.1:8000');
 export default class Login extends Component {
   state = {
     userName: '',
-    password: ''
+    password: '',
+    isLoggedIn: false
   };
 
   componentDidMount() {
@@ -18,6 +19,8 @@ export default class Login extends Component {
       this.setState({ arr: data });
       console.log(data);
     };
+
+
   }
 
   sendMessage = e => {

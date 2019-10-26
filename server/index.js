@@ -60,27 +60,38 @@ app.post('/register', (req, res) => {
 const middle = (req,res,next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
   if(!token){
-    console.log('Nope!');
+    return res.json({message: 'Login failed; Invalid user ID or password'})
   }
-  next()
+  console.log(token);
+  try{
+    const data = jwt.verify(token, private_key)
+    req.user = {...data}
+    next()
+  } catch{
+    return res.json({message: 'Login failed; Invalid user ID or password'})
+  }
+  
 }
 
-app.post('/login',middle,(req, res) => {
-  console.log(req.user);
+app.post('/auth', middle, (req,res)=>{
+  res.json(req.user)
+})
+
+app.post('/login',(req, res) => {
   const { userName, password } = req.body;
 
   User.findOne({ userName }).then(user => {
     if (user) {
       bcrypt.compare(password, user.password).then(isMatch => {
         if(!isMatch){
-          res.
+          res.json({message: 'Login failed; Invalid user ID or password'})
           console.log("Login failed; Invalid user ID or password");
         } else {
           let tokenData = {}
           tokenData.userName = user.userName
           console.log(tokenData);
           const token = jwt.sign(tokenData, private_key)
-          res.cookie("token", token, {maxAge: 900000, httpOnly: true}).sendStatus(200);
+          res.cookie("token", token, {maxAge: 900000, httpOnly: true}).status(200).json({redirect:'/auth'});
         }
       })
     } else {
