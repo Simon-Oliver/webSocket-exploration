@@ -67,7 +67,7 @@ const middle = (req, res, next) => {
   console.log(token);
   try {
     const data = jwt.verify(token, private_key);
-    req.user = { ...data };
+    req.user = { ...data, isAuth: true };
     next();
   } catch {
     return res.json({ message: 'Login failed; Invalid user ID or password' });

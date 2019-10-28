@@ -1,22 +1,22 @@
-import React from 'react'
+import React from 'react';
 
 class IsAuth extends React.Component {
-    state = {
-        isLoggedIn:false
-    }
+  state = {
+    isAuth: false
+  };
 
-   componentDidMount(){
+  componentDidMount() {
     fetch('/auth', {
-        method: 'POST',
-        credentials: 'same-origin',
-      }).then(res => res.json()).then(data => console.log(data))
-   }
+      method: 'POST',
+      credentials: 'same-origin'
+    })
+      .then(res => res.json())
+      .then(data => this.setState(prevState => ({ ...prevState, ...data })));
+  }
 
-    render(){
-        return(
-           <div> {this.state.isLoggedIn ? <p>Is Authenticated</p> : <p>Not logged in</p>}</div>
-        )
-    }
+  render() {
+    return <div> {this.state.isAuth ? <p>Is Authenticated</p> : <p>Not logged in</p>}</div>;
+  }
 }
 
 export default IsAuth;
