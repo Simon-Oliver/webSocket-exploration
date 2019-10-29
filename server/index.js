@@ -62,7 +62,7 @@ const middle = (req, res, next) => {
   const token =
     req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
   if (!token) {
-    return res.json({ message: 'Login failed; Invalid user ID or password' });
+    return res.json({ message: 'No access token provided', redirect: '/login' });
   }
   console.log(token);
   try {
@@ -70,7 +70,7 @@ const middle = (req, res, next) => {
     req.user = { ...data, isAuth: true };
     next();
   } catch {
-    return res.json({ message: 'Login failed; Invalid user ID or password' });
+    return res.json({ message: 'No access token provided', redirect: '/login' });
   }
 };
 
