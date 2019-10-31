@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { Redirect } from 'react-router-dom';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
@@ -7,7 +8,8 @@ export default class Login extends Component {
   state = {
     userName: '',
     password: '',
-    isLoggedIn: false
+    isLoggedIn: false,
+    redirect: ''
   };
 
   componentDidMount() {
@@ -19,8 +21,6 @@ export default class Login extends Component {
       this.setState({ arr: data });
       console.log(data);
     };
-
-
   }
 
   sendMessage = e => {
@@ -34,7 +34,12 @@ export default class Login extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(this.setState({ userName: '', password: '' }));
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState(prevState => ({ ...prevState, ...data, userName: '', password: '' }));
+      });
   };
 
   login = e => {
@@ -47,7 +52,12 @@ export default class Login extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(this.setState({ userName: '', password: '' }));
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState(prevState => ({ ...prevState, ...data, userName: '', password: '' }));
+      });
   };
 
   onInputChange = e => {
@@ -61,6 +71,9 @@ export default class Login extends Component {
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}></Redirect>;
+    }
     return (
       <div className="container">
         <div className="row">

@@ -99,6 +99,7 @@ app.post('/login', (req, res) => {
         }
       });
     } else {
+      res.json({ message: 'Login failed; Invalid user ID or password' });
       console.log('Login failed; Invalid user ID or password');
     }
   });
