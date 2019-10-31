@@ -3,5 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Components/App';
 import 'materialize-css/dist/css/materialize.min.css';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
