@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
-export default class Login extends Component {
+export default class Register extends Component {
   state = {
     userName: '',
     password: '',
@@ -23,10 +23,11 @@ export default class Login extends Component {
     };
   }
 
-  login = e => {
+  sendMessage = e => {
     e.preventDefault();
     const data = JSON.stringify({ ...this.state });
-    fetch('/login', {
+    // client.send(data);
+    fetch('/register', {
       method: 'POST',
       body: data,
       credentials: 'same-origin',
@@ -83,13 +84,13 @@ export default class Login extends Component {
                 />
                 <label htmlFor="password">Password</label>
               </div>
-              <button onClick={e => this.login(e)} className="waves-effect waves-light btn-large">
-                Login
+              <button
+                onClick={e => this.sendMessage(e)}
+                className="waves-effect waves-light btn-large"
+              >
+                Create
               </button>
             </div>
-            <p>
-              Are you new? <a href="/register">Create an account.</a>
-            </p>
           </form>
         </div>
       </div>
