@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { Redirect } from 'react-router-dom';
-import Message from '../Banner/Message'
+import Message from '../Banner/Message';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
@@ -11,7 +11,7 @@ export default class Login extends Component {
     password: '',
     isLoggedIn: false,
     redirect: '',
-    message:''
+    message: ''
   };
 
   componentDidMount() {
@@ -46,7 +46,7 @@ export default class Login extends Component {
   onInputChange = e => {
     const { id, value } = e.target;
 
-    this.setState(prevState => ({ ...prevState, [id]: value, message:'' }));
+    this.setState(prevState => ({ ...prevState, [id]: value, message: '' }));
   };
 
   renderList = () => {
@@ -59,7 +59,7 @@ export default class Login extends Component {
     }
     return (
       <div className="container form-container">
-      {this.state.message ? <Message message={this.state.message}/>: null}
+        {this.state.message ? <Message message={this.state.message} /> : null}
         <div className="row">
           <form className="col s12">
             <div className="row">
