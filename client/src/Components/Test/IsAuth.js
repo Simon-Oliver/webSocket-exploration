@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-const client = new W3CWebSocket('ws://192.168.1.11:8080');
 import jwt from 'jsonwebtoken';
+const client = new W3CWebSocket('ws://192.168.1.11:8080');
 
 class IsAuth extends React.Component {
   state = {
