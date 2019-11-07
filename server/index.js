@@ -163,8 +163,8 @@ wsServer.on('request', function(request) {
   // user sent some message
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
-      const data = JSON.parse(message.utf8Data).data;
-      console.log('ws socket received -----', message);
+      const data = JSON.parse(message.utf8Data);
+      console.log('ws socket received -----', data);
 
       //const { name, id } = data;
 
