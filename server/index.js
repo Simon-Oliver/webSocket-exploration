@@ -121,6 +121,7 @@ app.post('/login', (req, res) => {
         } else {
           let tokenData = {};
           tokenData.userName = user.userName;
+          tokenData.userID = user._id;
           console.log(tokenData);
           const token = jwt.sign(tokenData, private_key);
           res
