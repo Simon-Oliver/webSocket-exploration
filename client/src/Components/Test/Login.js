@@ -66,7 +66,6 @@ export default class Login extends Component {
               <div className="input-field col s12">
                 <input
                   onChange={e => this.onInputChange(e)}
-                  placeholder="Placeholder"
                   id="userName"
                   type="text"
                   className="validate"
