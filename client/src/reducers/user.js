@@ -2,15 +2,15 @@ import { setUser } from '../actions';
 
 const initialState = {
   userName: '',
-  id: '',
+  userID: '',
   isAuth: false
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER':
-      const { userName, id, isAuth } = action.payload;
-      return { userName, id, isAuth };
+      const { userName, userID, isAuth } = action.payload;
+      return { userName, userID, isAuth };
     default:
       return state;
   }
