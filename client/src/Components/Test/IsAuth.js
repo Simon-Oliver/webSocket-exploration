@@ -1,4 +1,5 @@
 import React from 'react';
+import '../Test/IsAuth.css';
 import { Redirect } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { connect } from 'react-redux';
@@ -36,9 +37,9 @@ class IsAuth extends React.Component {
       return <Redirect to={this.state.redirect}></Redirect>;
     }
     return (
-      <div>
+      <div className="IsAuth container">
         {this.state.isAuth ? (
-          <div className="container">
+          <div>
             <h3>Is auth</h3>
           </div>
         ) : null}
