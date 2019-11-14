@@ -41,6 +41,7 @@ class IsAuth extends React.Component {
         {this.state.isAuth ? (
           <div>
             <h3>Is auth</h3>
+            <p>Hi {this.state.userName}</p>
           </div>
         ) : null}
       </div>
@@ -50,7 +51,8 @@ class IsAuth extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isAuth: state.isAuth
+    isAuth: state.isAuth,
+    userName: state.userName
   };
 };
 
