@@ -8,7 +8,14 @@ const client = new W3CWebSocket('ws://192.168.1.114:8080');
 class IsAuth extends React.Component {
   state = {
     isAuth: false,
-    redirect: ''
+    redirect: '',
+    name: '',
+    orderID: '',
+    orderFrom: '',
+    tableNum: '',
+    notes: '',
+    orderIn: '',
+    orderOut: ''
   };
 
   componentDidMount() {
@@ -37,11 +44,48 @@ class IsAuth extends React.Component {
       return <Redirect to={this.state.redirect}></Redirect>;
     }
     return (
-      <div className="IsAuth container">
+      <div className="IsAuth">
         {this.state.isAuth ? (
           <div>
             <h3>Is auth</h3>
             <p>Hi {this.state.userName}</p>
+            <div className="container form-container">
+              <div className="row">
+                <form className="col s12">
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <input
+                        onChange={e => this.onInputChange(e)}
+                        placeholder="Placeholder"
+                        id="userName"
+                        type="text"
+                        className="validate"
+                        value={this.state.userName}
+                      />
+                      <label htmlFor="userName">User Name</label>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <input
+                        onChange={e => this.onInputChange(e)}
+                        id="password"
+                        type="password"
+                        className="validate"
+                        value={this.state.password}
+                      />
+                      <label htmlFor="password">Password</label>
+                    </div>
+                    <button
+                      onClick={e => this.sendMessage(e)}
+                      className="waves-effect waves-light btn-large"
+                    >
+                      Create
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         ) : null}
       </div>
