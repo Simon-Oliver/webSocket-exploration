@@ -26,7 +26,6 @@ class IsAuth extends React.Component {
       .then(res => res.json())
       .then(data => this.setState(prevState => ({ ...prevState, ...data })))
       .then(() => {
-        client.send(JSON.stringify(this.state));
         this.props.dispatch({ type: 'SET_USER', payload: { ...this.state } });
       })
       .catch(err => console.log('something went wrong', err));
@@ -38,6 +37,17 @@ class IsAuth extends React.Component {
       console.log(message);
     };
   }
+
+  onInputChange = e => {
+    const { id, value } = e.target;
+
+    this.setState(prevState => ({ ...prevState, [id]: value }));
+  };
+
+  sendMessage = e => {
+    e.preventDefault();
+    client.send(JSON.stringify(this.state));
+  };
 
   render() {
     if (this.state.redirect) {
@@ -56,31 +66,40 @@ class IsAuth extends React.Component {
                     <div className="input-field col s12">
                       <input
                         onChange={e => this.onInputChange(e)}
-                        placeholder="Placeholder"
-                        id="userName"
+                        id="name"
                         type="text"
                         className="validate"
-                        value={this.state.userName}
+                        value={this.state.name}
                       />
-                      <label htmlFor="userName">User Name</label>
+                      <label htmlFor="name">Name</label>
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12">
                       <input
                         onChange={e => this.onInputChange(e)}
-                        id="password"
-                        type="password"
+                        id="tableNum"
+                        type="number"
                         className="validate"
-                        value={this.state.password}
+                        value={this.state.tableNum}
                       />
-                      <label htmlFor="password">Password</label>
+                      <label htmlFor="tableNum">Table Number</label>
+                    </div>
+                    <div className="input-field col s12">
+                      <input
+                        onChange={e => this.onInputChange(e)}
+                        id="notes"
+                        type="text"
+                        className="validate"
+                        value={this.state.notes}
+                      />
+                      <label htmlFor="tableNum">Notes</label>
                     </div>
                     <button
                       onClick={e => this.sendMessage(e)}
                       className="waves-effect waves-light btn-large"
                     >
-                      Create
+                      Submit
                     </button>
                   </div>
                 </form>
