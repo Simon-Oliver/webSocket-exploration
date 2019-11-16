@@ -1,4 +1,5 @@
 import React from 'react';
+import Itemselection from '../Order/ItemSelection';
 import '../Test/IsAuth.css';
 import { Redirect } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
@@ -59,52 +60,7 @@ class IsAuth extends React.Component {
           <div>
             <h3>Is auth</h3>
             <p>Hi {this.state.userName}</p>
-            <div className="container form-container">
-              <div className="row">
-                <form className="col s12">
-                  <div className="row">
-                    <div className="input-field col s12">
-                      <input
-                        onChange={e => this.onInputChange(e)}
-                        id="name"
-                        type="text"
-                        className="validate"
-                        value={this.state.name}
-                      />
-                      <label htmlFor="name">Name</label>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="input-field col s12">
-                      <input
-                        onChange={e => this.onInputChange(e)}
-                        id="tableNum"
-                        type="number"
-                        className="validate"
-                        value={this.state.tableNum}
-                      />
-                      <label htmlFor="tableNum">Table Number</label>
-                    </div>
-                    <div className="input-field col s12">
-                      <input
-                        onChange={e => this.onInputChange(e)}
-                        id="notes"
-                        type="text"
-                        className="validate"
-                        value={this.state.notes}
-                      />
-                      <label htmlFor="tableNum">Notes</label>
-                    </div>
-                    <button
-                      onClick={e => this.sendMessage(e)}
-                      className="waves-effect waves-light btn-large"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+            <Itemselection></Itemselection>
           </div>
         ) : null}
       </div>

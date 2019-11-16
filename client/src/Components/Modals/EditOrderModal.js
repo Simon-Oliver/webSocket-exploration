@@ -54,7 +54,7 @@ export default class EditOrderModal extends Component {
                   type="text"
                   className="validate"
                   value={this.state.item}
-                  readonly="readonly"
+                  readOnly="readonly"
                 />
                 <label className="active" htmlFor="orderItem">
                   Order Title
@@ -62,7 +62,7 @@ export default class EditOrderModal extends Component {
               </div>
             </div>
             <button
-              class="btn waves-effect red darken-3 waves-light"
+              className="btn waves-effect red darken-3 waves-light"
               name="action"
               onClick={e => {
                 e.preventDefault();

@@ -2,7 +2,7 @@ import React from 'react';
 import './AddOrder.css';
 import EditOrderModal from '../Modals/EditOrderModal';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-const client = new W3CWebSocket('ws://192.168.1.11:8000');
+const client = new W3CWebSocket('ws://192.168.1.114:8080');
 const uuidv1 = require('uuid/v1');
 
 class AddOrder extends React.Component {

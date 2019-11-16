@@ -27,6 +27,10 @@ export default class ItemSelection extends Component {
     modalIsOpen: false
   };
 
+  componentDidUpdate() {
+    this.calculateTotal(this.state.order);
+  }
+
   handleItemClick = e => {
     const newItem = this.state.items.filter(item => item.id === Number(e.target.id))[0];
     const itemInOrder = this.state.order.filter(item => item.id === Number(e.target.id)).length
@@ -37,11 +41,23 @@ export default class ItemSelection extends Component {
       const order = this.state.order;
       const indexOfUpdate = this.state.order.findIndex(item => item.id === Number(e.target.id));
       order[indexOfUpdate].qnt += 1;
-      this.setState({ order: [...order] });
+      this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
     } else {
       newItem.qnt = 1;
-      this.setState(prevState => ({ order: [...prevState.order, newItem] }));
+      this.setState(
+        prevState => ({ order: [...prevState.order, newItem] }),
+        () => this.calculateTotal(this.state.order)
+      );
     }
+  };
+
+  calculateTotal = items => {
+    const init = 0;
+    const total = items.reduce(
+      (prevVal, currentVal) => prevVal + Number(currentVal.price) * Number(currentVal.qnt),
+      init
+    );
+    console.log(total);
   };
 
   handelSelect = id => {
