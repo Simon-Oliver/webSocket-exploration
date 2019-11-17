@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { Redirect } from 'react-router-dom';
 import Message from '../Banner/Message';
-
-const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 export default class Login extends Component {
   state = {
@@ -14,16 +11,16 @@ export default class Login extends Component {
     message: ''
   };
 
-  componentDidMount() {
-    client.onopen = () => {
-      console.log('WebSocket Client Connected');
-    };
-    client.onmessage = message => {
-      const data = JSON.parse(message.data).data;
-      this.setState({ arr: data });
-      console.log(data);
-    };
-  }
+  // componentDidMount() {
+  //   client.onopen = () => {
+  //     console.log('WebSocket Client Connected');
+  //   };
+  //   client.onmessage = message => {
+  //     const data = JSON.parse(message.data).data;
+  //     this.setState({ arr: data });
+  //     console.log(data);
+  //   };
+  // }
 
   login = e => {
     e.preventDefault();

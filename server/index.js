@@ -95,7 +95,7 @@ const middle = (req, res, next) => {
   if (!token) {
     return res.json({ message: 'No access token provided', redirect: '/login' });
   }
-  console.log(token);
+  console.log('Token –', token);
   try {
     const data = jwt.verify(token, private_key);
     req.user = { ...data, isAuth: true };
@@ -150,7 +150,7 @@ wsServer.on('request', function(request) {
   var connection = request.accept(null, request.origin);
   // we need to know client index to remove them on 'close' event
   let index = clients.push(connection);
-  console.log(new Date() + ' Connection accepted.');
+  console.log(new Date() + ' Connection accepted.', connection);
   //connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
 
   // Order.find({}, function(error, documents) {

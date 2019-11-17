@@ -31,8 +31,8 @@ class IsAuth extends React.Component {
       })
       .catch(err => console.log('something went wrong', err));
 
-    client.onopen = () => {
-      console.log('WebSocket Client Connected');
+    client.onopen = socket => {
+      console.log('WebSocket Client Connected', socket.id);
     };
     client.onmessage = message => {
       console.log(message);
