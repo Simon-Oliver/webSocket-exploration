@@ -58,8 +58,6 @@ class IsAuth extends React.Component {
       <div className="IsAuth">
         {this.state.isAuth ? (
           <div>
-            <h3>Is auth</h3>
-            <p>Hi {this.state.userName}</p>
             <Itemselection></Itemselection>
           </div>
         ) : null}

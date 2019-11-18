@@ -24,10 +24,11 @@ export default class ItemSelection extends Component {
       { qnt: 4, id: 12, item: 'Salad', price: '8', options: ['Rare', 'Medium Rare', 'Well Done'] }
     ],
     selected: {},
-    modalIsOpen: false
+    modalIsOpen: false,
+    orderTotal: 0
   };
 
-  componentDidUpdate() {
+  componentDidMount() {
     this.calculateTotal(this.state.order);
   }
 
@@ -57,7 +58,7 @@ export default class ItemSelection extends Component {
       (prevVal, currentVal) => prevVal + Number(currentVal.price) * Number(currentVal.qnt),
       init
     );
-    console.log(total);
+    this.setState({ orderTotal: total });
   };
 
   handelSelect = id => {
@@ -78,13 +79,13 @@ export default class ItemSelection extends Component {
     const indexOfUpdate = this.state.order.findIndex(item => item.id === Number(id));
 
     order[indexOfUpdate].qnt = Number(update);
-    this.setState({ order: [...order] });
+    this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
     console.log(id, update);
   };
 
   deletedOrder = id => {
     const order = this.state.order.filter(e => e.id !== id);
-    this.setState({ order: [...order] });
+    this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
   };
 
   render() {
@@ -101,7 +102,11 @@ export default class ItemSelection extends Component {
         ) : null}
         <div className="select-order-left">
           <div className="order-container">
-            <Items handleSelect={this.handelSelect} order={this.state.order}></Items>
+            <Items
+              handleSelect={this.handelSelect}
+              order={this.state.order}
+              orderTotal={this.state.orderTotal}
+            ></Items>
           </div>
         </div>
         <div className="select-order-right">

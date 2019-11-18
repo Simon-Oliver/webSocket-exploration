@@ -13,6 +13,13 @@ export default function Items(props) {
         {props.order.map((e, i) => (
           <Item handleSelect={props.handleSelect} key={i} item={e}></Item>
         ))}
+        {props.order.length ? (
+          <tr className="total">
+            <th className="number">Total</th>
+            <th></th>
+            <th className="number">{props.orderTotal}</th>
+          </tr>
+        ) : null}
       </tbody>
     </table>
   );

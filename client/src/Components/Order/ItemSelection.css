@@ -41,6 +41,12 @@ tr {
     cursor: pointer;
 }
 
+tr.total {
+    font-weight: 500;
+    border-width: 5px;
+    border-color: white;
+}
+
 .header {
     justify-self: center;
     font-weight: 500;
