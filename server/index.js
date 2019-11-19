@@ -109,6 +109,10 @@ app.post('/auth', middle, (req, res) => {
   res.json(req.user);
 });
 
+app.post('/items:id', middle, (req, res) => {
+  console.log(req);
+});
+
 app.post('/login', (req, res) => {
   const { userName, password } = req.body;
 
