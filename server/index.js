@@ -93,7 +93,7 @@ const middle = (req, res, next) => {
   const token =
     req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
   if (!token) {
-    return res.json({ message: 'No access token provided', redirect: '/login' });
+    return res.json({ message: 'No access token provided. Please login.', redirect: '/login' });
   }
   console.log('Token –', token);
   try {
@@ -101,7 +101,7 @@ const middle = (req, res, next) => {
     req.user = { ...data, isAuth: true };
     next();
   } catch {
-    return res.json({ message: 'No access token provided', redirect: '/login' });
+    return res.json({ message: 'No access token provided. Please login.', redirect: '/login' });
   }
 };
 

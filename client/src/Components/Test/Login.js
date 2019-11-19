@@ -22,6 +22,12 @@ export default class Login extends Component {
   //   };
   // }
 
+  componentDidMount() {
+    if (this.props.location.message) {
+      this.setState({ message: this.props.location.message });
+    }
+  }
+
   login = e => {
     e.preventDefault();
     const data = JSON.stringify({ ...this.state });
