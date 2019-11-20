@@ -82,7 +82,7 @@ app.post('/register', (req, res) => {
             console.log(err);
           }
           console.log('Saved', doc);
-          res.status(200).json({ redirect: '/auth' });
+          res.status(200).json({ redirect: '/items' });
         });
       });
     }
@@ -131,7 +131,7 @@ app.post('/login', (req, res) => {
           res
             .cookie('token', token, { maxAge: 900000, httpOnly: true })
             .status(200)
-            .json({ redirect: '/auth' });
+            .json({ redirect: '/items' });
         }
       });
     } else {
@@ -154,7 +154,7 @@ wsServer.on('request', function(request) {
   var connection = request.accept(null, request.origin);
   // we need to know client index to remove them on 'close' event
   let index = clients.push(connection);
-  console.log(new Date() + ' Connection accepted.', connection);
+  console.log(new Date() + ' Connection accepted.');
   //connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
 
   // Order.find({}, function(error, documents) {

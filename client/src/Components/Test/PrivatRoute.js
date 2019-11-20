@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class PrivateRoute extends React.Component {
   state = {
@@ -15,6 +16,9 @@ class PrivateRoute extends React.Component {
     })
       .then(res => res.json())
       .then(data => this.setState(prevState => ({ ...prevState, ...data, loaded: true })))
+      .then(() => {
+        this.props.dispatch({ type: 'SET_USER', payload: { ...this.state } });
+      })
       .catch(err => console.log('something went wrong', err));
   }
 
@@ -42,4 +46,11 @@ class PrivateRoute extends React.Component {
   }
 }
 
-export default PrivateRoute;
+const mapStateToProps = state => {
+  return {
+    isAuth: state.isAuth,
+    userName: state.userName
+  };
+};
+
+export default connect(mapStateToProps)(PrivateRoute);

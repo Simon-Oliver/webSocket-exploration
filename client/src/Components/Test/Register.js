@@ -84,12 +84,14 @@ export default class Register extends Component {
                 />
                 <label htmlFor="password">Password</label>
               </div>
-              <button
-                onClick={e => this.sendMessage(e)}
-                className="waves-effect waves-light btn-large"
-              >
-                Create
-              </button>
+              <div class="input-field col s12 center-align">
+                <button
+                  onClick={e => this.sendMessage(e)}
+                  className="waves-effect waves-light btn-large"
+                >
+                  Create
+                </button>
+              </div>
             </div>
           </form>
         </div>

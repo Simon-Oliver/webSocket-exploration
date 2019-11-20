@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Login from './Test/Login';
-import IsAuth from './Test/IsAuth';
+import Order from './Test/Order';
 import Register from './Test/Register';
 import AddItem from './Test/AddItem';
 
@@ -13,9 +13,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route exact path="/auth" component={IsAuth}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
+          <PrivateRoute exact path="/order" component={Order}></PrivateRoute>
           <PrivateRoute path="/items" component={AddItem}></PrivateRoute>
         </Switch>
       </BrowserRouter>
