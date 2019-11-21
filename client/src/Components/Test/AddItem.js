@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 export default class AddItem extends Component {
   state = {
     item: '',
     price: '',
     options: ['Rare', 'Medium'],
-    newOption: ''
+    newOption: '',
+    redirect: ''
   };
 
   //id: 1, item: 'Beef', price: '15', options: ['Rare', 'Medium Rare', 'Well Done']
@@ -48,7 +50,25 @@ export default class AddItem extends Component {
     }
   };
 
+  handleOnSave = e => {
+    e.preventDefault();
+    const data = JSON.stringify({ ...this.state });
+    fetch('/items/12345654', {
+      method: 'POST',
+      body: data,
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => this.setState({ redirect: data.redirect }));
+  };
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}></Redirect>;
+    }
     return (
       <div className="container">
         <form className="col s12">
@@ -86,8 +106,10 @@ export default class AddItem extends Component {
                 className="validate"
                 value={this.state.newOption}
               />
-              <label htmlFor="options">Option:</label>
+              <label htmlFor="newOption">Option:</label>
             </div>
+          </div>
+          <div className="row">
             <div className="input-field">
               <a
                 className="waves-effect waves-light btn-small"
@@ -106,6 +128,16 @@ export default class AddItem extends Component {
               </div>
             </div>
           ) : null}
+          <div className="row">
+            <div className="input-field col s12 center-align">
+              <button
+                className="waves-effect waves-light btn-large"
+                onClick={e => this.handleOnSave(e)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     );

@@ -109,8 +109,9 @@ app.post('/auth', middle, (req, res) => {
   res.json(req.user);
 });
 
-app.post('/items:id', middle, (req, res) => {
-  console.log(req);
+app.post('/items/:id', middle, (req, res) => {
+  console.log(req.params);
+  res.json({ redirect: '/order' });
 });
 
 app.post('/login', (req, res) => {
