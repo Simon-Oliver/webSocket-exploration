@@ -86,7 +86,7 @@ export default class AddItem extends Component {
                 className="validate"
                 value={this.state.newOption}
               />
-              <label htmlFor="options">Options:</label>
+              <label htmlFor="options">Option:</label>
             </div>
             <div className="input-field">
               <a
@@ -100,6 +100,7 @@ export default class AddItem extends Component {
 
           {this.state.options.length ? (
             <div>
+              <label htmlFor="options">Options:</label>
               <div class="collection" id="options">
                 {this.renderList(this.state.options)}
               </div>
