@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class AddItem extends Component {
+class AddItem extends Component {
   state = {
     item: '',
     price: '',
-    options: ['Rare', 'Medium'],
+    options: [],
     newOption: '',
     redirect: ''
   };
@@ -52,8 +53,10 @@ export default class AddItem extends Component {
 
   handleOnSave = e => {
     e.preventDefault();
-    const data = JSON.stringify({ ...this.state });
-    fetch('/items/12345654', {
+    const { item, price, options } = this.state;
+    const { userID } = this.props;
+    const data = JSON.stringify({ item, price, options, userID });
+    fetch('/items', {
       method: 'POST',
       body: data,
       credentials: 'same-origin',
@@ -143,3 +146,12 @@ export default class AddItem extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userName: state.user.userName,
+    userID: state.user.userID
+  };
+};
+
+export default connect(mapStateToProps)(AddItem);

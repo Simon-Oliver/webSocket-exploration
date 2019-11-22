@@ -4,7 +4,8 @@ const MenuItemSchema = new mongoose.Schema(
   {
     item: { type: String, required: true },
     price: { type: Number, required: true },
-    options: [{ type: String }]
+    options: [{ type: String }],
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   },
   { timestamps: true }
 );

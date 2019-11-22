@@ -42,6 +42,7 @@ const PORT = 8000;
 
 // Mongoose Models
 const User = require('./models/User');
+const MenuItem = require('./models/MenuItem');
 
 // DB connection
 const mongo_uri = process.env.MONGODB_URI || 'mongodb://localhost/kitchenTest';
@@ -109,9 +110,17 @@ app.post('/auth', middle, (req, res) => {
   res.json(req.user);
 });
 
-app.post('/items/:id', middle, (req, res) => {
-  console.log(req.params);
-  res.json({ redirect: '/order' });
+app.post('/items', middle, (req, res) => {
+  console.log(req.body);
+  const { item, price, options, userID } = req.body;
+  const newitem = new MenuItem({ item, price, options, createdBy: userID });
+  newitem.save((err, doc) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log('Saved', doc);
+    res.status(200).json({ redirect: '/items' });
+  });
 });
 
 app.post('/login', (req, res) => {
