@@ -123,6 +123,13 @@ app.post('/items', middle, (req, res) => {
   });
 });
 
+app.get('/items', middle, (req, res) => {
+  MenuItem.find({}).then(items => {
+    console.log(items);
+    res.status(200).json({ items });
+  });
+});
+
 app.post('/login', (req, res) => {
   const { userName, password } = req.body;
 
