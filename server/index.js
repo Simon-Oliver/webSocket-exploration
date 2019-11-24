@@ -124,10 +124,13 @@ app.post('/items', middle, (req, res) => {
 });
 
 app.get('/items', middle, (req, res) => {
-  MenuItem.find({}).then(items => {
-    console.log(items);
-    res.status(200).json({ items });
-  });
+  MenuItem.find({})
+    .select('-__v -createdAt -updatedAt')
+    .populate('createdBy', '-password -__v -date')
+    .then(items => {
+      console.log(items);
+      res.status(200).json({ items });
+    });
 });
 
 app.post('/login', (req, res) => {

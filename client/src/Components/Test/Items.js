@@ -15,17 +15,20 @@ export default class Items extends Component {
     const { items } = this.state;
     console.log(items);
     return items.map(e => (
-      <li key={e.item} class="collection-item flex-container">
+      <li key={e.item} className="collection-item flex-container">
         <span className="title bold">{e.item}</span>
         <span className="price">${e.price}</span>
         <span className="options">
-        Options: {e.options.map(option => (
-          <span className='option'>{option}</span>
-        )) }
+          Options:
+          {e.options.map(option => (
+            <span key={option} className="option">
+              {option}
+            </span>
+          ))}
         </span>
 
-        <span class="new badge red" data-badge-caption="Delete"></span>
-        <span class="new badge orange" data-badge-caption="Edit"></span>
+        <span className="new badge red" data-badge-caption="Delete"></span>
+        <span className="new badge orange" data-badge-caption="Edit"></span>
       </li>
     ));
   }
@@ -34,7 +37,7 @@ export default class Items extends Component {
     return (
       <div className="container">
         <h4>Menu Items:</h4>
-        <ul class="collection">{this.renderList()}</ul>
+        <ul className="collection">{this.renderList()}</ul>
       </div>
     );
   }
