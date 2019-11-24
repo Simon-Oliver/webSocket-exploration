@@ -88,7 +88,7 @@ export default class Login extends Component {
                 />
                 <label htmlFor="password">Password</label>
               </div>
-              <div class="input-field col s12 center-align">
+              <div className="input-field col s12 center-align">
                 <button onClick={e => this.login(e)} className="waves-effect waves-light btn-large">
                   Login
                 </button>

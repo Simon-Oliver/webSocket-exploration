@@ -15,17 +15,21 @@ export default class Items extends Component {
     const { items } = this.state;
     console.log(items);
     return items.map(e => (
-      <div>
-        <p>{e.item}</p>
-      </div>
+      <li key={e.item} class="collection-item">
+        <span class="title">{e.item}</span>
+        <p>${e.price}</p>
+        <a href="#!" class="secondary-content">
+          edit
+        </a>
+      </li>
     ));
   }
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2>Items:</h2>
-        {this.renderList()}
+        <ul class="collection">{this.renderList()}</ul>;
       </div>
     );
   }
