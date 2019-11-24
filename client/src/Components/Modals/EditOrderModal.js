@@ -20,14 +20,15 @@ export default class EditOrderModal extends Component {
   };
 
   render() {
-    const { isOpen, children, updateOrder, toggleModal } = this.props;
+    //children
+    const { isOpen, updateOrder, toggleModal } = this.props;
     return (
       <div
         id="modalBg"
         className={isOpen ? 'edit-order-modal' : 'edit-order-modal modal-close'}
         onClick={e => {
           // updateOrder(null, '____Test Modal____');
-          if (e.target.id == 'modalBg') {
+          if (e.target.id === 'modalBg') {
             toggleModal();
             updateOrder(this.state.id, this.state.qnt);
           }

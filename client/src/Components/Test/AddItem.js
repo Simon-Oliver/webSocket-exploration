@@ -39,7 +39,7 @@ class AddItem extends Component {
   handleDeleteOption = e => {
     const { options } = this.state;
     const option = e.target.nextSibling.data;
-    const newOptions = options.filter(e => e != option);
+    const newOptions = options.filter(e => e !== option);
     this.setState(prev => ({ ...prev, options: [...newOptions] }));
   };
 
@@ -114,12 +114,12 @@ class AddItem extends Component {
           </div>
           <div className="row">
             <div className="input-field">
-              <a
+              <div
                 className="waves-effect waves-light btn-small"
                 onClick={() => this.handleAdd(this.state.newOption)}
               >
                 Add Option
-              </a>
+              </div>
             </div>
           </div>
 

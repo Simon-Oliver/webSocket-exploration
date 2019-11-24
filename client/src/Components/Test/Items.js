@@ -28,8 +28,8 @@ export default class Items extends Component {
   render() {
     return (
       <div className="container">
-        <h2>Items:</h2>
-        <ul class="collection">{this.renderList()}</ul>;
+        <h2>Items</h2>
+        <ul class="collection">{this.renderList()}</ul>
       </div>
     );
   }
