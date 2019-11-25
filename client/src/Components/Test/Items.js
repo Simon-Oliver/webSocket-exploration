@@ -11,6 +11,10 @@ export default class Items extends Component {
       .then(data => this.setState({ items: data.items }));
   }
 
+  handleDelete(e) {
+    console.log(e.target);
+  }
+
   renderList() {
     const { items } = this.state;
     console.log(items);
@@ -27,7 +31,11 @@ export default class Items extends Component {
           ))}
         </span>
 
-        <span className="new badge red" data-badge-caption="Delete"></span>
+        <span
+          className="new badge red"
+          data-badge-caption="Delete"
+          onClick={e => this.handleDelete(e)}
+        ></span>
         <span className="new badge orange" data-badge-caption="Edit"></span>
       </li>
     ));
