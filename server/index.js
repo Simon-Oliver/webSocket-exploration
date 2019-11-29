@@ -146,6 +146,11 @@ app.delete('/items', middle, (req, res) => {
   });
 });
 
+app.put('/items', (req, res) => {
+  res.status(200).json({ redirect: '/items' });
+  console.log(req.body);
+});
+
 app.post('/login', (req, res) => {
   const { userName, password } = req.body;
 

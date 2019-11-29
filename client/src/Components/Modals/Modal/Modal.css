@@ -13,6 +13,7 @@
 
 .modal-container {
     background: white;
+    width: 500px;
     padding: 2rem;
     border-radius: 5px;
 }

@@ -8,10 +8,17 @@ class AddItem extends Component {
     price: '',
     options: [],
     newOption: '',
-    redirect: ''
+    redirect: '',
+    modalIsOpen: false
   };
 
   //id: 1, item: 'Beef', price: '15', options: ['Rare', 'Medium Rare', 'Well Done']
+
+  componentDidMount() {
+    if (this.props) {
+      this.setState({ ...this.props.item, modalIsOpen: true });
+    }
+  }
 
   toggleModal = e => {
     this.setState(prevState => ({
@@ -56,8 +63,11 @@ class AddItem extends Component {
     const { item, price, options } = this.state;
     const { userID } = this.props;
     const data = JSON.stringify({ item, price, options, userID });
+
+    const method = this.state.modalIsOpen ? 'PUT' : 'POST';
+
     fetch('/items', {
-      method: 'POST',
+      method,
       body: data,
       credentials: 'same-origin',
       headers: {
@@ -65,7 +75,13 @@ class AddItem extends Component {
       }
     })
       .then(res => res.json())
-      .then(data => this.setState({ redirect: data.redirect }));
+      .then(data => {
+        if (this.state.modalIsOpen) {
+          console.log('Toggle fired');
+          this.props.toggle();
+        }
+        this.setState({ redirect: data.redirect });
+      });
   };
 
   render() {
@@ -84,7 +100,9 @@ class AddItem extends Component {
                 className="validate"
                 value={this.state.item}
               />
-              <label htmlFor="item">Item Name</label>
+              <label className={this.state.modalIsOpen ? 'active' : ''} htmlFor="item">
+                Item Name
+              </label>
             </div>
           </div>
           <div className="row">
@@ -97,7 +115,9 @@ class AddItem extends Component {
                 className="validate"
                 value={this.state.price}
               />
-              <label htmlFor="price">Price</label>
+              <label className={this.state.modalIsOpen ? 'active' : ''} htmlFor="price">
+                Price
+              </label>
             </div>
           </div>
           <div className="row">
@@ -109,7 +129,9 @@ class AddItem extends Component {
                 className="validate"
                 value={this.state.newOption}
               />
-              <label htmlFor="newOption">Option:</label>
+              <label className={this.state.modalIsOpen ? 'active' : ''} htmlFor="newOption">
+                Option:
+              </label>
             </div>
           </div>
           <div className="row">

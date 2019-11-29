@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { toggleState } from '../../helper';
 import './Items.css';
+import EditItem from './EditItem';
 
 export default class Items extends Component {
   state = {
-    items: []
+    items: [],
+    modalIsOpen: false,
+    selectedItem: {}
   };
 
   componentDidMount() {
@@ -31,9 +35,20 @@ export default class Items extends Component {
     }).then(() => this.updateState());
   }
 
+  toggle = e => {
+    if (!e) {
+      this.setState(toggleState('modalIsOpen'));
+    } else {
+      const selected = this.state.items.filter(item => item._id === e.target.parentElement.id)[0];
+      console.log(selected);
+      this.setState({ selectedItem: selected }, () => {
+        this.setState(toggleState('modalIsOpen'));
+      });
+    }
+  };
+
   renderList() {
     const { items } = this.state;
-    console.log(items);
     return items.map(e => (
       <li id={e._id} key={e.item} className="collection-item flex-container">
         <span className="title bold">{e.item}</span>
@@ -52,7 +67,11 @@ export default class Items extends Component {
           data-badge-caption="Delete"
           onClick={e => this.handleDelete(e)}
         ></span>
-        <span className="new badge orange item-button" data-badge-caption="Edit"></span>
+        <span
+          className="new badge orange item-button"
+          data-badge-caption="Edit"
+          onClick={this.toggle}
+        ></span>
       </li>
     ));
   }
@@ -60,6 +79,13 @@ export default class Items extends Component {
   render() {
     return (
       <div className="container">
+        {this.state.modalIsOpen ? (
+          <EditItem
+            item={this.state.selectedItem}
+            modalIsOpen={this.state.modalIsOpen}
+            toggle={this.toggle}
+          ></EditItem>
+        ) : null}
         <h4>Menu Items:</h4>
         <ul className="collection">{this.renderList()}</ul>
       </div>
