@@ -50,7 +50,8 @@ const mongo_uri = process.env.MONGODB_URI || 'mongodb://localhost/kitchenTest';
 mongoose.connect(
   mongo_uri,
   {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   },
   function(err) {
     if (err) {
@@ -96,7 +97,7 @@ const middle = (req, res, next) => {
   if (!token) {
     return res.json({ message: 'No access token provided. Please login.', redirect: '/login' });
   }
-  console.log('Token –', token);
+  //console.log('Token –', token);
   try {
     const data = jwt.verify(token, private_key);
     req.user = { ...data, isAuth: true };
@@ -131,6 +132,18 @@ app.get('/items', middle, (req, res) => {
       console.log(items);
       res.status(200).json({ items });
     });
+});
+
+app.delete('/items', middle, (req, res) => {
+  const { id } = req.body.id;
+  console.log('delete fired');
+
+  MenuItem.findOneAndDelete({ id }, (err, doc) => {
+    if (err) {
+      console.log(err);
+    }
+    res.status(200).json({ redirect: '/items' });
+  });
 });
 
 app.post('/login', (req, res) => {
