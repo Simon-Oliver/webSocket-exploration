@@ -16,15 +16,15 @@ export default class Items extends Component {
       .then(data => this.setState({ items: data.items }));
   }
 
-  updateState() {
+  updateState = () => {
     fetch('/items')
       .then(res => res.json())
       .then(data => this.setState({ items: data.items }));
-  }
+  };
 
   handleDelete(e) {
-    console.log(e.target.parentElement.id);
-    const data = JSON.stringify({ id: e.target.parentElement.id });
+    console.log(e.target.id);
+    const data = JSON.stringify({ id: e.target.id });
     fetch('/items', {
       method: 'DELETE',
       body: data,
@@ -63,6 +63,7 @@ export default class Items extends Component {
         </span>
 
         <span
+          id={e._id}
           className="new badge red item-button"
           data-badge-caption="Delete"
           onClick={e => this.handleDelete(e)}
@@ -84,6 +85,7 @@ export default class Items extends Component {
             item={this.state.selectedItem}
             modalIsOpen={this.state.modalIsOpen}
             toggle={this.toggle}
+            updateState={this.updateState}
           ></EditItem>
         ) : null}
         <h4>Menu Items:</h4>

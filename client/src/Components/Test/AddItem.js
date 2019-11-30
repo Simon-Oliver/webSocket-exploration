@@ -9,15 +9,17 @@ class AddItem extends Component {
     options: [],
     newOption: '',
     redirect: '',
+    isEdit: false,
     modalIsOpen: false
   };
 
   //id: 1, item: 'Beef', price: '15', options: ['Rare', 'Medium Rare', 'Well Done']
 
   componentDidMount() {
-    if (this.props) {
-      this.setState({ ...this.props.item, modalIsOpen: true });
+    if (this.props.isEdit) {
+      this.setState({ ...this.props.item, modalIsOpen: true, isEdit: true });
     }
+    console.log(this.state);
   }
 
   toggleModal = e => {
@@ -60,11 +62,13 @@ class AddItem extends Component {
 
   handleOnSave = e => {
     e.preventDefault();
-    const { item, price, options } = this.state;
-    const { userID } = this.props;
-    const data = JSON.stringify({ item, price, options, userID });
+    const { _id, item, price, options } = this.state;
+    const data = JSON.stringify({ item, price, options, _id });
 
-    const method = this.state.modalIsOpen ? 'PUT' : 'POST';
+    const method = this.state.isEdit ? 'PUT' : 'POST';
+
+    console.log(method);
+    console.log(this.state);
 
     fetch('/items', {
       method,
@@ -78,7 +82,9 @@ class AddItem extends Component {
       .then(data => {
         if (this.state.modalIsOpen) {
           console.log('Toggle fired');
+          this.setState({ redirect: data.redirect });
           this.props.toggle();
+          this.props.updateState();
         }
         this.setState({ redirect: data.redirect });
       });

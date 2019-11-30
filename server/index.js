@@ -51,7 +51,8 @@ mongoose.connect(
   mongo_uri,
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   },
   function(err) {
     if (err) {
@@ -129,26 +130,34 @@ app.get('/items', middle, (req, res) => {
     .select('-__v -createdAt -updatedAt')
     .populate('createdBy', '-password -__v -date')
     .then(items => {
-      console.log(items);
       res.status(200).json({ items });
     });
 });
 
 app.delete('/items', middle, (req, res) => {
-  const { id } = req.body.id;
+  const { id } = req.body;
+  console.log(req.body);
   console.log('delete fired');
 
-  MenuItem.findOneAndDelete({ id }, (err, doc) => {
+  MenuItem.findByIdAndRemove(id, (err, doc) => {
     if (err) {
       console.log(err);
     }
+    console.log(doc);
     res.status(200).json({ redirect: '/items' });
   });
 });
 
 app.put('/items', (req, res) => {
   res.status(200).json({ redirect: '/items' });
+  const { _id, item, price, options } = req.body;
   console.log(req.body);
+  MenuItem.findOneAndUpdate({ _id }, { item, price, options }, (err, doc) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(doc);
+  });
 });
 
 app.post('/login', (req, res) => {
