@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import 'semantic-ui-css/semantic.min.css';
 import Login from './Test/Login';
 import Order from './Test/Order';
 import Register from './Test/Register';

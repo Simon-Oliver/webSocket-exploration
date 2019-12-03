@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { toggleState } from '../../helper';
 import './Items.css';
 import EditItem from './EditItem';
+import { Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export default class Items extends Component {
   state = {
@@ -90,6 +92,9 @@ export default class Items extends Component {
         ) : null}
         <h4>Menu Items:</h4>
         <ul className="collection">{this.renderList()}</ul>
+        <Link to="/items/add">
+          <Button primary>Add Item</Button>
+        </Link>
       </div>
     );
   }
