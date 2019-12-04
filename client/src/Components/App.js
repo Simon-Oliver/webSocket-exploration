@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import 'semantic-ui-css/semantic.min.css';
 import Login from './Test/Login';
 import Order from './Test/Order';
 import Register from './Test/Register';
 import AddItem from './Test/AddItem';
 import Items from './Test/Items';
+import SemanticTest from './Test/SemanticTest';
 
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 import PrivateRoute from './Test/PrivatRoute';
@@ -17,6 +17,7 @@ function App() {
         <Switch>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
+          <Route path="/test" component={SemanticTest}></Route>
           <PrivateRoute exact path="/order" component={Order}></PrivateRoute>
           <PrivateRoute path="/items/add" component={AddItem}></PrivateRoute>
           <PrivateRoute path="/items" component={Items}></PrivateRoute>

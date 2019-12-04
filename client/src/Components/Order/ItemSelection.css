@@ -30,7 +30,7 @@
     color: white;
 }
 
-th {
+/* th {
     table-layout: auto;
     border-collapse: collapse;
     width: 100%;
@@ -45,7 +45,7 @@ tr.total {
     font-weight: 500;
     border-width: 5px;
     border-color: white;
-}
+} */
 
 .header {
     justify-self: center;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { toggleState } from '../../helper';
 import './Items.css';
 import EditItem from './EditItem';
-import { Button } from 'semantic-ui-react';
+import { Button, Container, Icon, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export default class Items extends Component {
@@ -25,8 +25,7 @@ export default class Items extends Component {
   };
 
   handleDelete(e) {
-    console.log(e.target.id);
-    const data = JSON.stringify({ id: e.target.id });
+    const data = JSON.stringify({ id: e.target.parentElement.parentElement.id });
     fetch('/items', {
       method: 'DELETE',
       body: data,
@@ -41,7 +40,9 @@ export default class Items extends Component {
     if (!e) {
       this.setState(toggleState('modalIsOpen'));
     } else {
-      const selected = this.state.items.filter(item => item._id === e.target.parentElement.id)[0];
+      const selected = this.state.items.filter(
+        item => item._id === e.target.parentElement.parentElement.id
+      )[0];
       console.log(selected);
       this.setState({ selectedItem: selected }, () => {
         this.setState(toggleState('modalIsOpen'));
@@ -52,36 +53,43 @@ export default class Items extends Component {
   renderList() {
     const { items } = this.state;
     return items.map(e => (
-      <li id={e._id} key={e.item} className="collection-item flex-container">
-        <span className="title bold">{e.item}</span>
-        <span className="price">${e.price}</span>
-        <span className="options">
-          Options:
-          {e.options.map(option => (
-            <span key={option} className="option">
-              {option}
-            </span>
-          ))}
-        </span>
-
-        <span
-          id={e._id}
-          className="new badge red item-button"
-          data-badge-caption="Delete"
-          onClick={e => this.handleDelete(e)}
-        ></span>
-        <span
-          className="new badge orange item-button"
-          data-badge-caption="Edit"
-          onClick={this.toggle}
-        ></span>
-      </li>
+      <Table.Row key={e.item} id={e._id}>
+        <Table.Cell>
+          <span className="title bold">{e.item}</span>
+        </Table.Cell>
+        <Table.Cell>
+          <span className="price">${e.price}</span>
+        </Table.Cell>
+        <Table.Cell>
+          <span className="options">
+            {e.options.map(option => (
+              <span key={option} className="option">
+                {option}
+              </span>
+            ))}
+          </span>
+        </Table.Cell>
+        <Table.Cell collapsing>
+          <Button size="mini" onClick={this.toggle}>
+            Edit
+          </Button>
+          <Button
+            icon
+            color="red"
+            size="mini"
+            data-badge-caption="Delete"
+            onClick={e => this.handleDelete(e)}
+          >
+            <Icon name="trash" />
+          </Button>
+        </Table.Cell>
+      </Table.Row>
     ));
   }
 
   render() {
     return (
-      <div className="container">
+      <Container>
         {this.state.modalIsOpen ? (
           <EditItem
             item={this.state.selectedItem}
@@ -91,11 +99,29 @@ export default class Items extends Component {
           ></EditItem>
         ) : null}
         <h4>Menu Items:</h4>
-        <ul className="collection">{this.renderList()}</ul>
-        <Link to="/items/add">
-          <Button primary>Add Item</Button>
-        </Link>
-      </div>
+        <Table celled singleLine>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell collapsing>Item Name</Table.HeaderCell>
+              <Table.HeaderCell collapsing>Price</Table.HeaderCell>
+              <Table.HeaderCell>Options</Table.HeaderCell>
+              <Table.HeaderCell />
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{this.renderList()}</Table.Body>
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell colSpan="4">
+                <Link to="/items/add">
+                  <Button primary floated="right">
+                    Add Item
+                  </Button>
+                </Link>
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
+        </Table>
+      </Container>
     );
   }
 }
