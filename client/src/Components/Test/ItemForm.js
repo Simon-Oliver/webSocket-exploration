@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Container, Form, Button, Checkbox, Icon, Segment } from 'semantic-ui-react';
+//import { connect } from 'react-redux';
 
-class AddItem extends Component {
+class ItemForm extends Component {
   state = {
     item: '',
     price: '',
@@ -36,12 +37,25 @@ class AddItem extends Component {
 
   renderList = array => {
     return array.map(e => (
-      <div class="collection-item">
-        <span class="new badge red" data-badge-caption="" onClick={e => this.handleDeleteOption(e)}>
-          Delete
-        </span>
+      // <div class="collection-item">
+      //   <span class="new badge red" data-badge-caption="" onClick={e => this.handleDeleteOption(e)}>
+      //     Delete
+      //   </span>
+      //   {e}
+      // </div>
+
+      <Segment>
         {e}
-      </div>
+        <Button
+          icon
+          color="red"
+          floated="right"
+          type="submit"
+          onClick={() => this.handleAdd(this.state.newOption)}
+        >
+          <Icon name="trash" />
+        </Button>
+      </Segment>
     ));
   };
 
@@ -95,7 +109,48 @@ class AddItem extends Component {
       return <Redirect to={this.state.redirect}></Redirect>;
     }
     return (
-      <div className="container">
+      <Container>
+        <Form>
+          <Form.Group>
+            <Form.Field width={12} required>
+              <label>Item Name</label>
+              <input
+                id="item"
+                onChange={e => this.onInputChange(e)}
+                value={this.state.item}
+                type="text"
+                placeholder="Item Name"
+              />
+            </Form.Field>
+            <Form.Field width={4} required>
+              <label>Price</label>
+              <input
+                onChange={e => this.onInputChange(e)}
+                id="price"
+                type="number"
+                step="0.01"
+                className="validate"
+                value={this.state.price}
+                placeholder="Price"
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group>
+            <Form.Field width={16}>
+              <label>Option:</label>
+              <input
+                onChange={e => this.onInputChange(e)}
+                id="newOption"
+                type="text"
+                value={this.state.newOption}
+              />
+            </Form.Field>
+          </Form.Group>
+          <label htmlFor="options">Options:</label>
+          <Segment.Group>{this.renderList(this.state.options)}</Segment.Group>
+          <Button>Add</Button>
+        </Form>
+
         <form className="col s12">
           <div className="row">
             <div className="input-field col s12">
@@ -170,16 +225,17 @@ class AddItem extends Component {
             </div>
           </div>
         </form>
-      </div>
+      </Container>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    userName: state.user.userName,
-    userID: state.user.userID
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     userName: state.user.userName,
+//     userID: state.user.userID
+//   };
+// };
 
-export default connect(mapStateToProps)(AddItem);
+// export default connect(mapStateToProps)(AddItem);
+export default ItemForm;
