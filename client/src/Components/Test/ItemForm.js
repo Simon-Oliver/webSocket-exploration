@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Container, Form, Button, Checkbox, Icon, Segment } from 'semantic-ui-react';
+import { Container, Form, Button, Label, Icon, Segment, List, Header } from 'semantic-ui-react';
 //import { connect } from 'react-redux';
 
 class ItemForm extends Component {
@@ -37,24 +37,11 @@ class ItemForm extends Component {
 
   renderList = array => {
     return array.map(e => (
-      // <div class="collection-item">
-      //   <span class="new badge red" data-badge-caption="" onClick={e => this.handleDeleteOption(e)}>
-      //     Delete
-      //   </span>
-      //   {e}
-      // </div>
-
       <Segment>
-        {e}
-        <Button
-          icon
-          color="red"
-          floated="right"
-          type="submit"
-          onClick={() => this.handleAdd(this.state.newOption)}
-        >
-          <Icon name="trash" />
-        </Button>
+        <Container>
+          <Icon floated="left" link name="x" onClick={e => this.handleDeleteOption(e)} />
+          {e}
+        </Container>
       </Segment>
     ));
   };
@@ -110,121 +97,61 @@ class ItemForm extends Component {
     }
     return (
       <Container>
-        <Form>
-          <Form.Group>
-            <Form.Field width={12} required>
-              <label>Item Name</label>
-              <input
-                id="item"
-                onChange={e => this.onInputChange(e)}
-                value={this.state.item}
-                type="text"
-                placeholder="Item Name"
-              />
-            </Form.Field>
-            <Form.Field width={4} required>
-              <label>Price</label>
-              <input
-                onChange={e => this.onInputChange(e)}
-                id="price"
-                type="number"
-                step="0.01"
-                className="validate"
-                value={this.state.price}
-                placeholder="Price"
-              />
-            </Form.Field>
-          </Form.Group>
-          <Form.Group>
-            <Form.Field width={16}>
-              <label>Option:</label>
-              <input
-                onChange={e => this.onInputChange(e)}
-                id="newOption"
-                type="text"
-                value={this.state.newOption}
-              />
-            </Form.Field>
-          </Form.Group>
-          <label htmlFor="options">Options:</label>
-          <Segment.Group>{this.renderList(this.state.options)}</Segment.Group>
-          <Button>Add</Button>
-        </Form>
-
-        <form className="col s12">
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                onChange={e => this.onInputChange(e)}
-                id="item"
-                type="text"
-                className="validate"
-                value={this.state.item}
-              />
-              <label className={this.state.modalIsOpen ? 'active' : ''} htmlFor="item">
-                Item Name
-              </label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                onChange={e => this.onInputChange(e)}
-                id="price"
-                type="number"
-                step="0.01"
-                className="validate"
-                value={this.state.price}
-              />
-              <label className={this.state.modalIsOpen ? 'active' : ''} htmlFor="price">
-                Price
-              </label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                onChange={e => this.onInputChange(e)}
-                id="newOption"
-                type="text"
-                className="validate"
-                value={this.state.newOption}
-              />
-              <label className={this.state.modalIsOpen ? 'active' : ''} htmlFor="newOption">
-                Option:
-              </label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field">
-              <div
-                className="waves-effect waves-light btn-small"
+        <Segment>
+          <Form>
+            <Form.Group>
+              <Form.Field width={12} required>
+                <label>Item Name</label>
+                <input
+                  id="item"
+                  onChange={e => this.onInputChange(e)}
+                  value={this.state.item}
+                  type="text"
+                  placeholder="Item Name"
+                />
+              </Form.Field>
+              <Form.Field width={4} required>
+                <label>Price</label>
+                <input
+                  onChange={e => this.onInputChange(e)}
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  className="validate"
+                  value={this.state.price}
+                  placeholder="Price"
+                />
+              </Form.Field>
+            </Form.Group>
+            <Form.Group>
+              <Form.Field width={16}>
+                <label>Option:</label>
+                <input
+                  onChange={e => this.onInputChange(e)}
+                  id="newOption"
+                  type="text"
+                  value={this.state.newOption}
+                />
+              </Form.Field>
+              <Form.Button
+                width={2}
+                floated="right"
+                label="&nbsp;"
                 onClick={() => this.handleAdd(this.state.newOption)}
               >
-                Add Option
-              </div>
-            </div>
-          </div>
-
-          {this.state.options.length ? (
-            <div>
-              <label htmlFor="options">Options:</label>
-              <div class="collection" id="options">
-                {this.renderList(this.state.options)}
-              </div>
-            </div>
-          ) : null}
-          <div className="row">
-            <div className="input-field col s12 center-align">
-              <button
-                className="waves-effect waves-light btn-large"
-                onClick={e => this.handleOnSave(e)}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </form>
+                Add Item
+              </Form.Button>
+            </Form.Group>
+            {this.state.options.length ? (
+              <Segment basic>
+                <Segment.Group>{this.renderList(this.state.options)}</Segment.Group>
+              </Segment>
+            ) : null}
+            <Button positive onClick={e => this.handleOnSave(e)}>
+              Save
+            </Button>
+          </Form>
+        </Segment>
       </Container>
     );
   }
