@@ -25,7 +25,7 @@ export default class Items extends Component {
   };
 
   handleDelete(e) {
-    const data = JSON.stringify({ id: e.target.parentElement.parentElement.id });
+    const data = JSON.stringify({ id: e.currentTarget.parentElement.parentElement.id });
     fetch('/items', {
       method: 'DELETE',
       body: data,
@@ -41,7 +41,7 @@ export default class Items extends Component {
       this.setState(toggleState('modalIsOpen'));
     } else {
       const selected = this.state.items.filter(
-        item => item._id === e.target.parentElement.parentElement.id
+        item => item._id === e.currentTarget.parentElement.parentElement.id
       )[0];
       console.log(selected);
       this.setState({ selectedItem: selected }, () => {
@@ -64,7 +64,7 @@ export default class Items extends Component {
           <span className="options">
             {e.options.map(option => (
               <span key={option} className="option">
-                {option}
+                {`${option}, `}
               </span>
             ))}
           </span>

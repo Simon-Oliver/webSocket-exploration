@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Container, Form, Button, Label, Icon, Segment, List, Header } from 'semantic-ui-react';
+import { Container, Form, Button, Icon, Segment } from 'semantic-ui-react';
 //import { connect } from 'react-redux';
 
 class ItemForm extends Component {
@@ -20,7 +20,6 @@ class ItemForm extends Component {
     if (this.props.isEdit) {
       this.setState({ ...this.props.item, modalIsOpen: true, isEdit: true });
     }
-    console.log(this.state);
   }
 
   toggleModal = e => {
@@ -37,7 +36,7 @@ class ItemForm extends Component {
 
   renderList = array => {
     return array.map(e => (
-      <Segment>
+      <Segment key={e}>
         <Container>
           <Icon floated="left" link name="x" onClick={e => this.handleDeleteOption(e)} />
           {e}
@@ -56,6 +55,7 @@ class ItemForm extends Component {
   handleAdd = option => {
     const { options } = this.state;
     const isInList = options.includes(option);
+
     if (option.length && !isInList) {
       this.setState(prev => ({ ...prev, options: [...prev.options, option], newOption: '' }));
     }
@@ -68,9 +68,6 @@ class ItemForm extends Component {
 
     const method = this.state.isEdit ? 'PUT' : 'POST';
 
-    console.log(method);
-    console.log(this.state);
-
     fetch('/items', {
       method,
       body: data,
@@ -82,12 +79,15 @@ class ItemForm extends Component {
       .then(res => res.json())
       .then(data => {
         if (this.state.modalIsOpen) {
-          console.log('Toggle fired');
           this.setState({ redirect: data.redirect });
-          this.props.toggle();
           this.props.updateState();
         }
         this.setState({ redirect: data.redirect });
+      })
+      .then(() => {
+        if (this.state.modalIsOpen) {
+          this.props.toggle();
+        }
       });
   };
 
@@ -134,6 +134,7 @@ class ItemForm extends Component {
                 />
               </Form.Field>
               <Form.Button
+                primary
                 width={2}
                 floated="right"
                 label="&nbsp;"
