@@ -102,6 +102,7 @@ const middle = (req, res, next) => {
   try {
     const data = jwt.verify(token, private_key);
     req.user = { ...data, isAuth: true };
+    res.cookie('token', token, { expires: new Date(Date.now() + 600000), httpOnly: true });
     next();
   } catch {
     return res.json({ message: 'No access token provided. Please login.', redirect: '/login' });
@@ -109,7 +110,9 @@ const middle = (req, res, next) => {
 };
 
 app.post('/auth', middle, (req, res) => {
-  res.json(req.user);
+  res
+    .json(req.user)
+    .cookie('token', token, { expires: new Date(Date.now() + 600000), httpOnly: true });
 });
 
 app.post('/items', middle, (req, res) => {
@@ -176,7 +179,7 @@ app.post('/login', (req, res) => {
           console.log(tokenData);
           const token = jwt.sign(tokenData, private_key);
           res
-            .cookie('token', token, { maxAge: 900000, httpOnly: true })
+            .cookie('token', token, { expires: new Date(Date.now() + 60000), httpOnly: true })
             .status(200)
             .json({ redirect: '/items' });
         }

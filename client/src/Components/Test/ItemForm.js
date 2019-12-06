@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Container, Form, Button, Icon, Segment } from 'semantic-ui-react';
 //import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
 
 class ItemForm extends Component {
   state = {
@@ -20,6 +21,7 @@ class ItemForm extends Component {
     if (this.props.isEdit) {
       this.setState({ ...this.props.item, modalIsOpen: true, isEdit: true });
     }
+    console.log(Cookies.get());
   }
 
   toggleModal = e => {
