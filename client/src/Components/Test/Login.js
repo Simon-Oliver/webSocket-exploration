@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Message from '../Banner/Message';
+import { Button, Form, Container, Grid, Segment, Header } from 'semantic-ui-react';
 
 export default class Login extends Component {
   state = {
@@ -61,45 +62,45 @@ export default class Login extends Component {
       return <Redirect to={this.state.redirect}></Redirect>;
     }
     return (
-      <div className="container form-container">
-        {this.state.message ? <Message message={this.state.message} /> : null}
-        <div className="row">
-          <form className="col s12">
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  onChange={e => this.onInputChange(e)}
-                  id="userName"
-                  type="text"
-                  className="validate"
-                  value={this.state.userName}
-                />
-                <label htmlFor="userName">User Name</label>
-              </div>
-            </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  onChange={e => this.onInputChange(e)}
-                  id="password"
-                  type="password"
-                  className="validate"
-                  value={this.state.password}
-                />
-                <label htmlFor="password">Password</label>
-              </div>
-              <div className="input-field col s12 center-align">
-                <button onClick={e => this.login(e)} className="waves-effect waves-light btn-large">
-                  Login
-                </button>
-                <p>
-                  Are you new? <a href="/register">Create an account.</a>
-                </p>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      <Container>
+        <Grid centered columns={3}>
+          <Grid.Column>
+            <Segment>
+              {this.state.message ? <Message message={this.state.message} /> : null}
+              <Form>
+                <Form.Field>
+                  <label>User Name</label>
+                  <input
+                    placeholder="User Name"
+                    onChange={e => this.onInputChange(e)}
+                    id="userName"
+                    type="text"
+                    value={this.state.userName}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label>Password</label>
+                  <input
+                    placeholder="Password"
+                    onChange={e => this.onInputChange(e)}
+                    id="password"
+                    type="password"
+                    value={this.state.password}
+                  />
+                </Form.Field>
+                <Container textAlign="center" basic>
+                  <Button positive onClick={e => this.login(e)} type="submit">
+                    Login
+                  </Button>
+                  <p>
+                    Are you new? <a href="/register">Create an account.</a>
+                  </p>
+                </Container>
+              </Form>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }
