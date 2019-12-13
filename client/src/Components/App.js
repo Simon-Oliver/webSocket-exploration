@@ -5,15 +5,18 @@ import Order from './Test/Order';
 import Register from './Test/Register';
 import ItemForm from './Test/ItemForm';
 import Items from './Test/Items';
+import NavMenu from './Test/Menu';
 import SemanticTest from './Test/SemanticTest';
 
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 import PrivateRoute from './Test/PrivatRoute';
 
 function App() {
   return (
-    <div className="App">
+    <Container className="App">
       <BrowserRouter>
+        <NavMenu></NavMenu>
         <Switch>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
@@ -23,7 +26,7 @@ function App() {
           <PrivateRoute path="/items" component={Items}></PrivateRoute>
         </Switch>
       </BrowserRouter>
-    </div>
+    </Container>
   );
 }
 
