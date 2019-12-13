@@ -15,9 +15,13 @@ export default class NavMenu extends Component {
     return (
       <Menu secondary>
         <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick} />
-        <Link to="/items">
-          <Menu.Item name="items" active={activeItem === 'items'} onClick={this.handleItemClick} />
-        </Link>
+        <Menu.Item
+          as={Link}
+          to="/items"
+          name="items"
+          active={activeItem === 'items'}
+          onClick={this.handleItemClick}
+        />
         <Menu.Item
           name="friends"
           active={activeItem === 'friends'}
