@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { Redirect } from 'react-router-dom';
+import { Button, Form, Container, Grid, Segment } from 'semantic-ui-react';
 
 // const client = new W3CWebSocket('ws://192.168.1.114:8080');
 
@@ -57,45 +58,46 @@ export default class Register extends Component {
       return <Redirect to={this.state.redirect}></Redirect>;
     }
     return (
-      <div className="container form-container">
-        <div className="row">
-          <form className="col s12">
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  onChange={e => this.onInputChange(e)}
-                  placeholder="Placeholder"
-                  id="userName"
-                  type="text"
-                  className="validate"
-                  value={this.state.userName}
-                />
-                <label htmlFor="userName">User Name</label>
-              </div>
-            </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  onChange={e => this.onInputChange(e)}
-                  id="password"
-                  type="password"
-                  className="validate"
-                  value={this.state.password}
-                />
-                <label htmlFor="password">Password</label>
-              </div>
-              <div class="input-field col s12 center-align">
-                <button
-                  onClick={e => this.sendMessage(e)}
-                  className="waves-effect waves-light btn-large"
-                >
-                  Create
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      <Container>
+        <Grid centered columns={3}>
+          <Grid.Column>
+            <Segment>
+              <Form>
+                <Form.Field>
+                  <label htmlFor="userName">User Name</label>
+                  <input
+                    onChange={e => this.onInputChange(e)}
+                    placeholder="User Name"
+                    id="userName"
+                    type="text"
+                    className="validate"
+                    value={this.state.userName}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label htmlFor="password">Password</label>
+                  <input
+                    onChange={e => this.onInputChange(e)}
+                    placeholder="Password"
+                    id="password"
+                    type="password"
+                    className="validate"
+                    value={this.state.password}
+                  />
+                </Form.Field>
+                <Container textAlign="center" basic>
+                  <Button positive onClick={e => this.sendMessage(e)}>
+                    Create
+                  </Button>
+                  <p>
+                    Already have an account? <a href="/login">Login</a>
+                  </p>
+                </Container>
+              </Form>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }
