@@ -9,6 +9,16 @@ export default class NavMenu extends Component {
     this.setState({ activeItem: name });
   };
 
+  handleLogout = () => {
+    fetch('/logout', {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  };
+
   render() {
     const { activeItem } = this.state;
 
@@ -25,13 +35,15 @@ export default class NavMenu extends Component {
         <Menu.Item
           name="friends"
           active={activeItem === 'friends'}
-          onClick={this.handleItemClick}
+          onClick={() => this.handleItemClick()}
         />
         <Menu.Menu position="right">
           <Menu.Item
+            as={Link}
+            to="/login"
             name="logout"
             active={activeItem === 'logout'}
-            onClick={this.handleItemClick}
+            onClick={this.handleLogout}
           />
         </Menu.Menu>
       </Menu>

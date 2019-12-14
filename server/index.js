@@ -151,7 +151,7 @@ app.delete('/items', middle, (req, res) => {
   });
 });
 
-app.put('/items', (req, res) => {
+app.put('/items', middle, (req, res) => {
   res.status(200).json({ redirect: '/items' });
   const { _id, item, price, options } = req.body;
   console.log(req.body);
@@ -189,6 +189,11 @@ app.post('/login', (req, res) => {
       console.log('Login failed; Invalid user ID or password');
     }
   });
+});
+
+app.get('/logout', middle, (req, res) => {
+  res.clearCookie('token');
+  res.send('cookie foo cleared');
 });
 
 app.listen(PORT, () => console.log(`Express server currently running on port ${PORT}`));
