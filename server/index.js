@@ -110,9 +110,7 @@ const middle = (req, res, next) => {
 };
 
 app.post('/auth', middle, (req, res) => {
-  res
-    .json(req.user)
-    .cookie('token', token, { expires: new Date(Date.now() + 600000), httpOnly: true });
+  res.json(req.user);
 });
 
 app.post('/items', middle, (req, res) => {
