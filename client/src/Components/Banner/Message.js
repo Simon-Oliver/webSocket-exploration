@@ -1,14 +1,16 @@
 import React from 'react';
 import './Banner.css';
+import { Message } from 'semantic-ui-react';
 
-class Message extends React.Component {
+class MessageBanner extends React.Component {
   render() {
     return (
-      <div className="error">
-        <p>{this.props.message}</p>
-      </div>
+      <Message warning>
+        <Message.Header>{this.props.message}</Message.Header>
+        <p>Visit our registration page, then try again.</p>
+      </Message>
     );
   }
 }
 
-export default Message;
+export default MessageBanner;

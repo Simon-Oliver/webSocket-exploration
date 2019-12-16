@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { Redirect } from 'react-router-dom';
-import { Button, Form, Container, Grid, Segment } from 'semantic-ui-react';
+import { Button, Form, Container, Grid, Segment, Message, Icon } from 'semantic-ui-react';
 
 // const client = new W3CWebSocket('ws://192.168.1.114:8080');
 
@@ -94,6 +94,10 @@ export default class Register extends Component {
                   </p>
                 </Container>
               </Form>
+              <Message attached="bottom" warning>
+                <Icon name="help" />
+                Already signed up?&nbsp;<a href="/login">Login here</a>&nbsp;instead.
+              </Message>
             </Segment>
           </Grid.Column>
         </Grid>
