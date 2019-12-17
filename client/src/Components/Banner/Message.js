@@ -7,7 +7,6 @@ class MessageBanner extends React.Component {
     return (
       <Message warning>
         <Message.Header>{this.props.message}</Message.Header>
-        <p>Visit our registration page, then try again.</p>
       </Message>
     );
   }

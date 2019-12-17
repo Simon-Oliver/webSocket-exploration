@@ -33,9 +33,11 @@ export default class NavMenu extends Component {
           onClick={this.handleItemClick}
         />
         <Menu.Item
-          name="friends"
-          active={activeItem === 'friends'}
-          onClick={() => this.handleItemClick()}
+          name="order"
+          active={activeItem === 'order'}
+          as={Link}
+          to="/order"
+          onClick={this.handleItemClick}
         />
         <Menu.Menu position="right">
           <Menu.Item

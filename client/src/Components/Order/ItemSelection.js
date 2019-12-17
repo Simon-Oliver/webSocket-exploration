@@ -6,41 +6,48 @@ import EditOrderModal from '../Modals/EditOrderModal';
 
 export default class ItemSelection extends Component {
   state = {
-    items: [
-      { id: 1, item: 'Beef', price: '15', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 2, item: 'Duck', price: '12', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 3, item: 'Lamb', price: '23', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 4, item: 'Apple', price: '17', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 5, item: 'King Fish', price: '45', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 6, item: 'Thuna', price: '63', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 7, item: 'Cheek', price: '33', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 8, item: 'Pork', price: '26', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 9, item: 'Corn', price: '11', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 10, item: 'Quail', price: '43', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 11, item: 'Caviar', price: '52', options: ['Rare', 'Medium Rare', 'Well Done'] },
-      { id: 12, item: 'Salad', price: '8', options: ['Rare', 'Medium Rare', 'Well Done'] }
-    ],
-    order: [
-      { qnt: 4, id: 12, item: 'Salad', price: '8', options: ['Rare', 'Medium Rare', 'Well Done'] }
-    ],
+    items: [],
+    order: [],
     selected: {},
     modalIsOpen: false,
     orderTotal: 0
   };
 
   componentDidMount() {
+    fetch('/items', {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.items);
+        const newItems = data.items.map(e => ({ ...e, qnt: 0 }));
+        console.log('newItem', newItems);
+        this.setState({ items: newItems });
+      });
     this.calculateTotal(this.state.order);
   }
 
   handleItemClick = e => {
-    const newItem = this.state.items.filter(item => item.id === Number(e.target.id))[0];
-    const itemInOrder = this.state.order.filter(item => item.id === Number(e.target.id)).length
+    console.log('items', this.state.items);
+    console.log('target id', e.target.id);
+    console.log('order', this.state.order);
+
+    //searching for id in order array. If found in array retrun first item (because it is the match)
+    const newItem = this.state.items.filter(item => item._id === e.target.id)[0];
+    const itemInOrder = this.state.order.filter(item => item._id === e.target.id).length
       ? true
       : false;
 
+    console.log('------- In Order', itemInOrder);
+
     if (itemInOrder) {
       const order = this.state.order;
-      const indexOfUpdate = this.state.order.findIndex(item => item.id === Number(e.target.id));
+      const indexOfUpdate = this.state.order.findIndex(item => item._id === e.target.id);
+      console.log(indexOfUpdate);
       order[indexOfUpdate].qnt += 1;
       this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
     } else {
@@ -58,11 +65,12 @@ export default class ItemSelection extends Component {
       (prevVal, currentVal) => prevVal + Number(currentVal.price) * Number(currentVal.qnt),
       init
     );
-    this.setState({ orderTotal: total });
+    //Math.round to avoid crazy long floating point number
+    this.setState({ orderTotal: Math.round(total * 100) / 100 });
   };
 
   handelSelect = id => {
-    const selected = this.state.order.find(e => e.id === Number(id));
+    const selected = this.state.order.find(e => e.id === id);
     this.setState({ selected });
     this.toggleModal();
     console.log(selected);
@@ -76,7 +84,7 @@ export default class ItemSelection extends Component {
 
   updateOrder = (id, update) => {
     const order = this.state.order;
-    const indexOfUpdate = this.state.order.findIndex(item => item.id === Number(id));
+    const indexOfUpdate = this.state.order.findIndex(item => item._id === id);
 
     order[indexOfUpdate].qnt = Number(update);
     this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
@@ -84,7 +92,7 @@ export default class ItemSelection extends Component {
   };
 
   deletedOrder = id => {
-    const order = this.state.order.filter(e => e.id !== id);
+    const order = this.state.order.filter(e => e._id !== id);
     this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
   };
 
