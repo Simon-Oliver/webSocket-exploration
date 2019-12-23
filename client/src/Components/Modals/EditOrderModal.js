@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, Button, Container, Segment } from 'semantic-ui-react';
 import './EditOrder.css';
 
 export default class EditOrderModal extends Component {
@@ -34,37 +35,24 @@ export default class EditOrderModal extends Component {
           }
         }}
       >
-        <div className="edit-order-modal-container">
-          <form
-            className="col s12"
-            onChange={e => {
-              this.handleChange(e);
-            }}
-            //onSubmit={e => this.handleOnSubmit(e)}
-          >
-            <div className="row modal-row">
-              <div className="input-field col s3">
-                <input id="qnt" type="number" className="validate" value={this.state.qnt} />
-                <label className="active" htmlFor="orderCount">
-                  Amount
-                </label>
-              </div>
-              <div className="input-field col s9">
-                <input
-                  id="item"
-                  type="text"
-                  className="validate"
-                  value={this.state.item}
-                  readOnly="readonly"
-                />
-                <label className="active" htmlFor="orderItem">
-                  Order Title
-                </label>
-              </div>
-            </div>
-            <button
-              className="btn waves-effect red darken-3 waves-light"
-              name="action"
+        <Segment>
+          <Form>
+            <Form.Group>
+              <Form.Input
+                label="Order Item"
+                placeholder="Order Name"
+                width={6}
+                id="item"
+                type="text"
+                value={this.state.item}
+                width={12}
+                readOnly
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Input label="Order Amount" id="qnt" type="number" value={this.state.qnt} />
+            </Form.Group>
+            <Button
               onClick={e => {
                 e.preventDefault();
                 toggleModal();
@@ -72,9 +60,9 @@ export default class EditOrderModal extends Component {
               }}
             >
               Delete
-            </button>
-          </form>
-        </div>
+            </Button>
+          </Form>
+        </Segment>
       </div>
     );
   }

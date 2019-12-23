@@ -47,7 +47,7 @@ export default class ItemSelection extends Component {
     if (itemInOrder) {
       const order = this.state.order;
       const indexOfUpdate = this.state.order.findIndex(item => item._id === e.target.id);
-      console.log(indexOfUpdate);
+      console.log('index of update', indexOfUpdate);
       order[indexOfUpdate].qnt += 1;
       this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
     } else {
@@ -73,7 +73,7 @@ export default class ItemSelection extends Component {
     const selected = this.state.order.find(e => e.id === id);
     this.setState({ selected });
     this.toggleModal();
-    console.log(selected);
+    console.log('selected', id, selected);
   };
 
   toggleModal = e => {
