@@ -48,7 +48,9 @@ export default class ItemSelection extends Component {
       const order = this.state.order;
       const indexOfUpdate = this.state.order.findIndex(item => item._id === e.target.id);
       console.log('index of update', indexOfUpdate);
+      console.log('order', order[indexOfUpdate].qnt);
       order[indexOfUpdate].qnt += 1;
+
       this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
     } else {
       newItem.qnt = 1;
