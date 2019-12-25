@@ -4,7 +4,7 @@ import './EditOrder.css';
 
 export default class EditOrderModal extends Component {
   state = {
-    id: '',
+    _id: '',
     qnt: '',
     item: ''
   };
@@ -31,12 +31,12 @@ export default class EditOrderModal extends Component {
           // updateOrder(null, '____Test Modal____');
           if (e.target.id === 'modalBg') {
             toggleModal();
-            updateOrder(this.state.id, this.state.qnt);
+            updateOrder(this.state._id, this.state.qnt);
           }
         }}
       >
         <Segment>
-          <Form>
+          <Form onChange={this.handleChange}>
             <Form.Group>
               <Form.Input
                 label="Order Item"

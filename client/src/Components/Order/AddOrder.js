@@ -34,7 +34,7 @@ class AddOrder extends React.Component {
 
   handleSelect = selected => {
     const itemId = selected.target.dataset.key;
-    const selectedItem = this.state.orders.filter(e => e.id === itemId)[0];
+    const selectedItem = this.state.orders.filter(e => e._id === itemId)[0];
     console.log(selectedItem);
     this.setState({ selectedItem }, () => {
       this.toggleModal();
@@ -70,7 +70,7 @@ class AddOrder extends React.Component {
 
   updateOrder = (id, data) => {
     console.log(data);
-    const oldData = this.state.orders.filter(e => e.id !== id);
+    const oldData = this.state.orders.filter(e => e._id !== id);
     this.setState({ orders: [...oldData, data] });
   };
 

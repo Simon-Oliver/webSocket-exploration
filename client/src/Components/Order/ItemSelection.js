@@ -25,7 +25,6 @@ export default class ItemSelection extends Component {
       .then(data => {
         console.log(data.items);
         const newItems = data.items.map(e => ({ ...e, qnt: 0 }));
-        console.log('newItem', newItems);
         this.setState({ items: newItems });
       });
     this.calculateTotal(this.state.order);
@@ -42,13 +41,9 @@ export default class ItemSelection extends Component {
       ? true
       : false;
 
-    console.log('------- In Order', itemInOrder);
-
     if (itemInOrder) {
       const order = this.state.order;
       const indexOfUpdate = this.state.order.findIndex(item => item._id === e.target.id);
-      console.log('index of update', indexOfUpdate);
-      console.log('order', order[indexOfUpdate].qnt);
       order[indexOfUpdate].qnt += 1;
 
       this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
@@ -72,10 +67,8 @@ export default class ItemSelection extends Component {
   };
 
   handelSelect = id => {
-    const selected = this.state.order.find(e => e.id === id);
-    this.setState({ selected });
-    this.toggleModal();
-    console.log('selected', id, selected);
+    const selected = this.state.order.find(e => e._id === id);
+    this.setState({ selected }, () => this.toggleModal());
   };
 
   toggleModal = e => {
@@ -88,9 +81,12 @@ export default class ItemSelection extends Component {
     const order = this.state.order;
     const indexOfUpdate = this.state.order.findIndex(item => item._id === id);
 
+    console.log('update order args', id, update);
+    console.log('index of update', indexOfUpdate);
+    console.log('order', order[indexOfUpdate].qnt);
+
     order[indexOfUpdate].qnt = Number(update);
     this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
-    console.log(id, update);
   };
 
   deletedOrder = id => {
