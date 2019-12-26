@@ -56,7 +56,7 @@ export default class EditOrderModal extends Component {
               onClick={e => {
                 e.preventDefault();
                 toggleModal();
-                this.props.deletedOrder(this.state.id);
+                this.props.deletedOrder(this.state._id);
               }}
             >
               Delete

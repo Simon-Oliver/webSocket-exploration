@@ -90,6 +90,7 @@ export default class ItemSelection extends Component {
   };
 
   deletedOrder = id => {
+    console.log('delete', id);
     const order = this.state.order.filter(e => e._id !== id);
     this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
   };
