@@ -1,10 +1,10 @@
 import React from 'react';
 import Item from './Item';
-import { Table, Label } from 'semantic-ui-react';
+import { Table, Label, Header } from 'semantic-ui-react';
 
 export default function Items(props) {
   return (
-    <Table celled>
+    <Table columns={3}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>QTY</Table.HeaderCell>
@@ -17,14 +17,22 @@ export default function Items(props) {
         {props.order.map((e, i) => (
           <Item handleSelect={props.handleSelect} key={i} item={e}></Item>
         ))}
+      </Table.Body>
+      <Table.Footer>
         {props.order.length ? (
           <Table.Row>
-            <Table.Cell>Total</Table.Cell>
-            <Table.Cell></Table.Cell>
-            <Table.Cell>{props.orderTotal}</Table.Cell>
+            <Table.HeaderCell>
+              {' '}
+              <Header as="h4">Total</Header>
+            </Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell>
+              {' '}
+              <Header as="h4">{props.orderTotal}</Header>
+            </Table.HeaderCell>
           </Table.Row>
         ) : null}
-      </Table.Body>
+      </Table.Footer>
     </Table>
   );
 }
