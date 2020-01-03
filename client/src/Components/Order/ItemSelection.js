@@ -3,6 +3,7 @@ import './ItemSelection.css';
 import Items from './Items';
 import OrderItems from './OrderItems';
 import EditOrderModal from '../Modals/EditOrderModal';
+import { Segment } from 'semantic-ui-react';
 
 export default class ItemSelection extends Component {
   state = {
@@ -116,12 +117,12 @@ export default class ItemSelection extends Component {
             ></Items>
           </div>
         </div>
-        <div className="select-order-right">
+        <Segment>
           <OrderItems
             handleItemClick={this.handleItemClick}
             OrderItems={this.state.items}
           ></OrderItems>
-        </div>
+        </Segment>
       </div>
     );
   }
