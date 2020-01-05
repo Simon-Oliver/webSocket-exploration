@@ -1,7 +1,7 @@
 .select-order-container-grid {
     display: grid;
     height: 100vh;
-    width: 100vw;
+    width: 70vw;
     grid-template-columns: 1fr 1fr;
 }
 

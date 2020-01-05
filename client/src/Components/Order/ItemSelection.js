@@ -3,7 +3,7 @@ import './ItemSelection.css';
 import Items from './Items';
 import OrderItems from './OrderItems';
 import EditOrderModal from '../Modals/EditOrderModal';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Grid } from 'semantic-ui-react';
 
 export default class ItemSelection extends Component {
   state = {
@@ -98,7 +98,7 @@ export default class ItemSelection extends Component {
 
   render() {
     return (
-      <div className="select-order-container-grid">
+      <Grid columns={2}>
         {this.state.modalIsOpen ? (
           <EditOrderModal
             selectedItem={this.state.selected}
@@ -108,22 +108,22 @@ export default class ItemSelection extends Component {
             deletedOrder={this.deletedOrder}
           ></EditOrderModal>
         ) : null}
-        <div className="select-order-left">
-          <div className="order-container">
-            <Items
-              handleSelect={this.handelSelect}
-              order={this.state.order}
-              orderTotal={this.state.orderTotal}
-            ></Items>
-          </div>
-        </div>
-        <Segment>
+
+        <Grid.Column>
+          <Items
+            handleSelect={this.handelSelect}
+            order={this.state.order}
+            orderTotal={this.state.orderTotal}
+          ></Items>
+        </Grid.Column>
+
+        <Grid.Column>
           <OrderItems
             handleItemClick={this.handleItemClick}
             OrderItems={this.state.items}
           ></OrderItems>
-        </Segment>
-      </div>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
