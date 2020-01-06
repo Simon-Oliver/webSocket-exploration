@@ -13,4 +13,6 @@
 .item-card {
     padding: 5px;
     cursor: pointer;
+    background: salmon;
+    margin: 5px;
 }

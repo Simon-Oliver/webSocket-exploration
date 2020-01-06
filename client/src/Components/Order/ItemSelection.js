@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ItemSelection.css';
 import Items from './Items';
 import OrderItems from './OrderItems';
+import Ticket from '../Test/Ticket';
 import EditOrderModal from '../Modals/EditOrderModal';
 import { Segment, Grid, Button } from 'semantic-ui-react';
 

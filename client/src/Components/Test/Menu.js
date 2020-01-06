@@ -39,6 +39,13 @@ export default class NavMenu extends Component {
           to="/order"
           onClick={this.handleItemClick}
         />
+        <Menu.Item
+          name="ticket"
+          active={activeItem === 'ticket'}
+          as={Link}
+          to="/ticket"
+          onClick={this.handleItemClick}
+        />
         <Menu.Menu position="right">
           <Menu.Item
             as={Link}
