@@ -1,4 +1,4 @@
-.order-grid {
+/* .order-grid {
     display: grid;
     align-content: center;
     grid-template-columns: repeat(4, 1fr);
@@ -8,15 +8,9 @@
     padding: 1rem;
     justify-self: center;
 
-}
+}*/
 
 .item-card {
-    background: grey;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 20vh;
-    width: 20vh;
-    border-radius: 5px;
+    padding: 5px;
     cursor: pointer;
 }

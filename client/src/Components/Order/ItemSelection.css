@@ -1,4 +1,4 @@
-.select-order-container-grid {
+/* .select-order-container-grid {
     display: grid;
     height: 100vh;
     width: 70vw;
@@ -27,7 +27,7 @@
 
 .order-container {
     color: white;
-}
+} */
 
 /* th {
     table-layout: auto;
@@ -46,7 +46,7 @@ tr.total {
     border-color: white;
 } */
 
-.header {
+/* .header {
     justify-self: center;
     font-weight: 500;
     border-width: 5px;
@@ -60,4 +60,4 @@ tr.total {
 
 .item {
     border-color: white;
-}
+} */

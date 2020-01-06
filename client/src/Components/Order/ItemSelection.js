@@ -3,7 +3,7 @@ import './ItemSelection.css';
 import Items from './Items';
 import OrderItems from './OrderItems';
 import EditOrderModal from '../Modals/EditOrderModal';
-import { Segment, Grid } from 'semantic-ui-react';
+import { Segment, Grid, Button } from 'semantic-ui-react';
 
 export default class ItemSelection extends Component {
   state = {
@@ -115,6 +115,7 @@ export default class ItemSelection extends Component {
             order={this.state.order}
             orderTotal={this.state.orderTotal}
           ></Items>
+          <Button>Submit</Button>
         </Grid.Column>
 
         <Grid.Column>
