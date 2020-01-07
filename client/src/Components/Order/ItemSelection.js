@@ -5,6 +5,8 @@ import OrderItems from './OrderItems';
 import Ticket from '../Test/Ticket';
 import EditOrderModal from '../Modals/EditOrderModal';
 import { Segment, Grid, Button } from 'semantic-ui-react';
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+const client = new W3CWebSocket('ws://localhost:8080');
 
 export default class ItemSelection extends Component {
   state = {
@@ -16,6 +18,13 @@ export default class ItemSelection extends Component {
   };
 
   componentDidMount() {
+    client.onopen = socket => {
+      console.log('WebSocket Client Connected', socket.id);
+    };
+    client.onmessage = message => {
+      console.log(message);
+    };
+
     fetch('/items', {
       method: 'GET',
       credentials: 'same-origin',
@@ -97,6 +106,13 @@ export default class ItemSelection extends Component {
     this.setState({ order: [...order] }, () => this.calculateTotal(this.state.order));
   };
 
+  handleSendOrder = e => {
+    e.preventDefault();
+    client.onopen = function(event) {
+      client.send(JSON.stringify({ message: 'Test' }));
+    };
+  };
+
   render() {
     return (
       <Grid columns={2}>
@@ -116,7 +132,7 @@ export default class ItemSelection extends Component {
             order={this.state.order}
             orderTotal={this.state.orderTotal}
           ></Items>
-          <Button>Submit</Button>
+          <Button onClick={e => this.handleSendOrder(e)}>Submit</Button>
         </Grid.Column>
 
         <Grid.Column>
