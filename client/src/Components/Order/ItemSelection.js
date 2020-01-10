@@ -6,7 +6,7 @@ import Ticket from '../Test/Ticket';
 import EditOrderModal from '../Modals/EditOrderModal';
 import { Segment, Grid, Button } from 'semantic-ui-react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-const client = new W3CWebSocket('ws://localhost:8080');
+const client = new W3CWebSocket('ws://192.168.1.3:8080');
 
 export default class ItemSelection extends Component {
   state = {
@@ -108,6 +108,7 @@ export default class ItemSelection extends Component {
 
   handleSendOrder = e => {
     e.preventDefault();
+    console.log('HandleSendOrder fired');
     client.onopen = function(event) {
       client.send(JSON.stringify({ message: 'Test' }));
     };

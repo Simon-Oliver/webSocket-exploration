@@ -220,6 +220,7 @@ wsServer.on('request', function(request) {
 
   // user sent some message
   connection.on('message', function(message) {
+    console.log('message ws fired');
     if (message.type === 'utf8') {
       const data = JSON.parse(message.utf8Data);
       console.log('ws socket received -----', data);

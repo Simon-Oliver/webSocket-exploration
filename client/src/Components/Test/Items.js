@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { toggleState } from '../../helper';
 import './Items.css';
 import EditItem from './EditItem';
-import { Button, Container, Icon, Table } from 'semantic-ui-react';
+import { Button, Container, Icon, Table, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export default class Items extends Component {
