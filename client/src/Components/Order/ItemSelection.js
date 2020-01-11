@@ -109,9 +109,7 @@ export default class ItemSelection extends Component {
   handleSendOrder = e => {
     e.preventDefault();
     console.log('HandleSendOrder fired');
-    client.onopen = function(event) {
-      client.send(JSON.stringify({ message: 'Test' }));
-    };
+    client.send(JSON.stringify({ message: this.state }));
   };
 
   render() {

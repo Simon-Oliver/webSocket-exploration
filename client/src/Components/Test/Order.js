@@ -18,12 +18,12 @@ class Order extends React.Component {
   };
 
   componentDidMount() {
-    client.onopen = socket => {
-      console.log('WebSocket Client Connected', socket.id);
-    };
-    client.onmessage = message => {
-      console.log(message);
-    };
+    // client.onopen = socket => {
+    //   console.log('WebSocket Client Connected', socket.id);
+    // };
+    // client.onmessage = message => {
+    //   console.log(message);
+    // };
   }
 
   onInputChange = e => {
