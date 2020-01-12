@@ -43,6 +43,7 @@ const PORT = 8000;
 // Mongoose Models
 const User = require('./models/User');
 const MenuItem = require('./models/MenuItem');
+const Order = require('./models/Order');
 
 // DB connection
 const mongo_uri = process.env.MONGODB_URI || 'mongodb://localhost/kitchenTest';
@@ -124,6 +125,14 @@ app.post('/items', middle, (req, res) => {
     console.log('Saved', doc);
     res.status(200).json({ redirect: '/items' });
   });
+});
+
+app.get('/order', middle, (req, res) => {
+  Order.find({})
+    .select('-__v -createdAt -updatedAt')
+    .then(items => {
+      res.status(200).json({ items });
+    });
 });
 
 app.get('/items', middle, (req, res) => {
@@ -225,6 +234,34 @@ wsServer.on('request', function(request) {
       const data = JSON.parse(message.utf8Data);
       console.log('ws socket received -----', data);
 
+      const { order, userID, userName } = data;
+      console.log('-------order_____', order);
+      const neworder = new Order({
+        name: userName,
+        orderFrom: userID,
+        tableNum: '99',
+        orderItems: order,
+        notes: '',
+        orderIn: Date(),
+        orderOut: ''
+      });
+
+      neworder.save((err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log('Saved', doc);
+        Order.find({})
+          .select('-__v -createdAt -updatedAt')
+          .then(items => {
+            console.log('ITEMS____________>>>>', items);
+            clients.forEach(function(client) {
+              client.sendUTF(JSON.stringify({ type: 'order', data: items }));
+            });
+          });
+        //res.status(200).json({ redirect: '/items' });
+      });
+
       //const { name, id } = data;
 
       // Order.findOneAndUpdate(
@@ -267,7 +304,7 @@ wsServer.on('request', function(request) {
       //   }
       // });
 
-      connection.sendUTF(JSON.stringify({ type: 'name', data: 'TEST1234' }));
+      //connection.sendUTF(JSON.stringify({ type: 'order', data }));
     }
   });
 

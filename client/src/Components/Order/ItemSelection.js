@@ -6,9 +6,10 @@ import Ticket from '../Test/Ticket';
 import EditOrderModal from '../Modals/EditOrderModal';
 import { Segment, Grid, Button } from 'semantic-ui-react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { connect } from 'react-redux';
 const client = new W3CWebSocket('ws://192.168.1.3:8080');
 
-export default class ItemSelection extends Component {
+class ItemSelection extends Component {
   state = {
     items: [],
     order: [],
@@ -18,12 +19,12 @@ export default class ItemSelection extends Component {
   };
 
   componentDidMount() {
-    client.onopen = socket => {
-      console.log('WebSocket Client Connected', socket.id);
-    };
-    client.onmessage = message => {
-      console.log(message);
-    };
+    // client.onopen = socket => {
+    //   console.log('WebSocket Client Connected', socket.id);
+    // };
+    // client.onmessage = message => {
+    //   console.log(message);
+    // };
 
     fetch('/items', {
       method: 'GET',
@@ -109,7 +110,14 @@ export default class ItemSelection extends Component {
   handleSendOrder = e => {
     e.preventDefault();
     console.log('HandleSendOrder fired');
-    client.send(JSON.stringify({ message: this.state }));
+    client.send(
+      JSON.stringify({
+        message: this.state,
+        userID: this.props.userID,
+        userName: this.props.userName,
+        order: this.state.order
+      })
+    );
   };
 
   render() {
@@ -144,3 +152,12 @@ export default class ItemSelection extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userName: state.user.userName,
+    userID: state.user.userID
+  };
+};
+
+export default connect(mapStateToProps)(ItemSelection);
