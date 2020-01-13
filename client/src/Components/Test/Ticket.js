@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from 'semantic-ui-react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 const client = new W3CWebSocket('ws://192.168.1.3:8080');
 
@@ -33,20 +34,39 @@ export default class Ticket extends React.Component {
       });
   }
 
+  componentWillUnmount() {
+    client.close();
+  }
+
   addOrder(order) {
     console.log(order);
     this.setState({ order });
   }
 
   renderList(array) {
-    return array.map(e => <li>{e.name}</li>);
+    console.log(this.state.order);
+    return array.map(e => (
+      <Card key={e._id}>
+        <Card.Content>
+          <Card.Header content={`Table: ${e.tableNum}`} />
+          <Card.Meta content={`Order by: ${e.name}`} />
+          <Card.Description>
+            <div>
+              {e.orderItems.map(e => (
+                <div key={e._id}>{`${e.qnt}x ${e.item}`}</div>
+              ))}
+            </div>
+          </Card.Description>
+        </Card.Content>
+      </Card>
+    ));
   }
 
   render() {
     return (
-      <div>
-        <ul>{this.renderList(this.state.order)}</ul>
-      </div>
+      <Card.Group>
+        {this.state.order ? <ul>{this.renderList(this.state.order)}</ul> : null}
+      </Card.Group>
     );
   }
 }
