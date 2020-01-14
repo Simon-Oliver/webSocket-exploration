@@ -5,9 +5,9 @@ import OrderItems from './OrderItems';
 import Ticket from '../Test/Ticket';
 import EditOrderModal from '../Modals/EditOrderModal';
 import { Segment, Grid, Button } from 'semantic-ui-react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
+// import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { connect } from 'react-redux';
-const client = new W3CWebSocket('ws://192.168.1.3:8080');
+// const client = new W3CWebSocket('ws://192.168.1.3:8080');
 
 class ItemSelection extends Component {
   state = {
@@ -110,7 +110,7 @@ class ItemSelection extends Component {
   handleSendOrder = e => {
     e.preventDefault();
     console.log('HandleSendOrder fired');
-    client.send(
+    this.props.client.send(
       JSON.stringify({
         message: this.state,
         userID: this.props.userID,

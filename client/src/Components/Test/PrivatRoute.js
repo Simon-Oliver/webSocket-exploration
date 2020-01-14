@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+const client = new W3CWebSocket('ws://192.168.1.3:8080');
 
 class PrivateRoute extends React.Component {
   state = {
@@ -10,6 +12,10 @@ class PrivateRoute extends React.Component {
   };
 
   componentDidMount() {
+    client.onopen = socket => {
+      console.log('WebSocket Client Connected', socket);
+    };
+
     fetch('/auth', {
       method: 'POST',
       credentials: 'same-origin'
@@ -31,7 +37,7 @@ class PrivateRoute extends React.Component {
         {...rest}
         render={props => {
           return isAuth ? (
-            <Component {...props} />
+            <Component {...props} client={client} />
           ) : (
             <Redirect
               to={{

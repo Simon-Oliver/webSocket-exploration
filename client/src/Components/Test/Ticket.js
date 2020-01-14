@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
-const client = new W3CWebSocket('ws://192.168.1.3:8080');
+// import { w3cwebsocket as W3CWebSocket } from 'websocket';
+// const client = new W3CWebSocket('ws://192.168.1.3:8080');
 
 export default class Ticket extends React.Component {
   state = {
@@ -11,13 +11,10 @@ export default class Ticket extends React.Component {
   };
 
   componentDidMount() {
-    client.onopen = socket => {
-      console.log('WebSocket Client Connected', socket.id);
-    };
-    client.onmessage = message => {
+    this.props.client.onmessage = message => {
       const json = JSON.parse(message.data);
       this.addOrder(json.data);
-      //console.log(JSON.parse(message.data));
+      console.log(JSON.parse(message.data));
     };
 
     fetch('/order', {
@@ -34,9 +31,9 @@ export default class Ticket extends React.Component {
       });
   }
 
-  componentWillUnmount() {
-    client.close();
-  }
+  // componentWillUnmount() {
+  //   this.props.client.close();
+  // }
 
   addOrder(order) {
     console.log(order);

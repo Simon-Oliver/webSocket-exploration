@@ -217,6 +217,8 @@ wsServer.on('request', function(request) {
   // we need to know client index to remove them on 'close' event
   let index = clients.push(connection);
   console.log(new Date() + ' Connection accepted.');
+  console.log('Connected ---------------------- ', connection.id);
+
   //connection.sendUTF(JSON.stringify({ type: 'history', data: 'test' }));
 
   // Order.find({}, function(error, documents) {
@@ -235,7 +237,7 @@ wsServer.on('request', function(request) {
       console.log('ws socket received -----', data);
 
       const { order, userID, userName } = data;
-      console.log('-------order_____', order);
+      //console.log('-------order_____', order);
       const neworder = new Order({
         name: userName,
         orderFrom: userID,
@@ -254,11 +256,20 @@ wsServer.on('request', function(request) {
         Order.find({})
           .select('-__v -createdAt -updatedAt')
           .then(items => {
-            console.log('ITEMS____________>>>>', items);
+            // console.log('ITEMS____________>>>>', items);
             clients.forEach(function(client) {
               client.sendUTF(JSON.stringify({ type: 'order', data: items }));
             });
+
+            // clients.broadcast = function(data, sender) {
+            //   clients.forEach(function(client) {
+            //     if (client !== sender) {
+            //       client.sendUTF(JSON.stringify({ type: 'order', data: items }));
+            //     }
+            //   });
+            // };
           });
+
         //res.status(200).json({ redirect: '/items' });
       });
 
