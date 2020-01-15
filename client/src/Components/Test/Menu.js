@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Input, Menu } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export default class NavMenu extends Component {
+class NavMenu extends Component {
   state = { activeItem: 'home' };
 
   handleItemClick = (e, { name }) => {
@@ -16,6 +17,8 @@ export default class NavMenu extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
+    }).then(() => {
+      this.props.dispatch({ type: 'SET_USER', payload: { isAuth: false } });
     });
   };
 
@@ -59,3 +62,11 @@ export default class NavMenu extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    isAuth: state.isAuth,
+    userName: state.userName
+  };
+};
+
+export default connect(mapStateToProps)(NavMenu);

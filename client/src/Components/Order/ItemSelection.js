@@ -35,7 +35,13 @@ class ItemSelection extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data.items);
+        console.log(data);
+
+        if (!data.auth) {
+          this.setState({ items: [] });
+          this.props.dispatch({ type: 'SET_USER', payload: { isAuth: false } });
+        }
+
         const newItems = data.items.map(e => ({ ...e, qnt: 0 }));
         this.setState({ items: newItems });
       });
@@ -156,7 +162,8 @@ class ItemSelection extends Component {
 const mapStateToProps = state => {
   return {
     userName: state.user.userName,
-    userID: state.user.userID
+    userID: state.user.userID,
+    isAuth: state.user.isAuth
   };
 };
 

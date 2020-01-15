@@ -12,20 +12,23 @@ class PrivateRoute extends React.Component {
   };
 
   componentDidMount() {
-    client.onopen = socket => {
-      console.log('WebSocket Client Connected', socket);
-    };
-
+    console.log('AUTH COMPONENT FIRED _____________');
     fetch('/auth', {
       method: 'POST',
       credentials: 'same-origin'
     })
       .then(res => res.json())
-      .then(data => this.setState(prevState => ({ ...prevState, ...data, loaded: true })))
+      .then(data => {
+        if (!data.isAuth) this.setState(prevState => ({ isAuth: false, loaded: true }));
+        this.setState(prevState => ({ ...prevState, ...data, loaded: true }));
+      })
       .then(() => {
         this.props.dispatch({ type: 'SET_USER', payload: { ...this.state } });
       })
       .catch(err => console.log('something went wrong', err));
+    client.onopen = socket => {
+      console.log('WebSocket Client Connected', socket);
+    };
   }
 
   render() {
